@@ -10,12 +10,13 @@
 @Desc    :   Rain Prediction Deep learning Module
 """
 
-from keras.models import model_from_json
-import tensorflow as tf
 import logging
-from typing import Optional, Dict
+from typing import Dict, Optional
+
 import numpy as np
 import pandas as pd
+import tensorflow as tf
+from keras.models import model_from_json
 
 tf.get_logger().setLevel("ERROR")
 tf.autograph.set_verbosity(3)

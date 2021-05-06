@@ -3,15 +3,16 @@
 """
 @File    :   API.py
 @Path    :   agrothon/
-@Time    :   2021/05/5
+@Time    :   2021/05/6
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.2
+@Version :   1.0.3
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Main module which starts API Server
 """
 import logging
 
 from fastapi import FastAPI, Security
+from fastapi.responses import RedirectResponse
 
 from agrothon import __VERSION__, MDBClient
 
@@ -31,6 +32,18 @@ Agrothon = FastAPI(
     openapi_url="/Agrothon.json",
     dependencies=[Security(verify_api_key)],
 )
+
+
+@Agrothon.get("/ping", tags=["utils"])
+async def ping():
+    return {"Ping": "Pong"}
+
+
+@Agrothon.get("/", response_class=RedirectResponse, include_in_schema=False)
+async def root():
+    return RedirectResponse("https://github.com/viswanathbalusu/agrothon")
+
+
 Agrothon.add_event_handler("startup", MDBClient.connect_db)
 Agrothon.add_event_handler("shutdown", MDBClient.close_mongo_connection)
 Agrothon.include_router(intruder.IntruderRouter)

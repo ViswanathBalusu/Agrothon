@@ -3,14 +3,14 @@
 """
 @File    :   __init__.py
 @Path    :   agrothon/
-@Time    :   2021/05/4
+@Time    :   2021/05/6
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.1
+@Version :   1.0.3
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Initialization Module for Agrothon
 """
 
-__VERSION__ = "1.0.2"
+__VERSION__ = "1.0.3"
 
 import logging
 import os
@@ -21,10 +21,10 @@ if os.path.exists("Agrothon.txt"):
         f.truncate(0)
 from .server.helpers.database import MongoClient
 
-if bool(os.environ.get("ENV", False)):
-    from agrothon.BaseConfig import Config
-else:
+try:
     from AgroConfig import Config
+except ModuleNotFoundError:
+    from agrothon.BaseConfig import Config
 
 from logging.handlers import RotatingFileHandler
 

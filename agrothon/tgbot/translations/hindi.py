@@ -44,16 +44,19 @@ class Language(object):
     # Thing Speak Data
 
     MOISTURE_RESP = """
-<b>Moisture 💧 in the Soil : </b><code> {}%</code>
-
+<b>💧 Moisture in the Soil : </b><code> {}%</code>
+<b>🕒 Last Updated at: </b><code> {}</code>
+<b>🕒 Last Read at: </b><code> {}</code>
 """
     HUMID_RESP = """
-<b>Humidity ⛅ in the Field : </b><code> {}%</code>
-
+<b>⛅ Humidity in the Field : </b><code> {}%</code>
+<b>🕒 Last Updated at: </b><code> {}</code>
+<b>🕒 Last Read at: </b><code> {}</code>
 """
     TEMPE_RESP = """
 <b>Temparature 🌡️ in the Field : </b><code> {}°C</code>
-
+<b>🕒 Last Updated at: </b><code> {}</code>
+<b>🕒 Last Read at: </b><code> {}</code>
 """
     RAIN_YES_RESP = """
 <b>It's raining 🌧️ out ther</b>
@@ -66,8 +69,10 @@ class Language(object):
     COMPLETE_RESP = """
 <b>💧 Moisture : </b><code> {}%</code>
 <b>⛅ Humidity : </b><code> {}%</code>
-<b>🌡️ Temparature : </b><code> {}°C</code>
-<b>🌧️ Is Raining : </b><code> {}</code>
+<b>🌡️ Temperature : </b><code> {}°C</code>
+<b>⛏️ Pump Should be : </b><code> {}</code>
+<b>🕒 Last Updated at: </b><code> {}</code>
+<b>🕒 Last Read at: </b><code> {}</code>
 
 """
     # Pump
@@ -133,3 +138,15 @@ Switched OFF by<code> User</code>
     RAIN_PREDICT_ERR = """
 Error while
 """
+    IMAGE_MESSAGE = """
+<b>Objects has been Detected </b>
+<b>No of objects detected</b> : <code> {}</code>
+<b>No of people detected</b> : <code> {}</code>
+
+<pre>{}</pre>
+"""
+    ERR_IMAGE_RESPONSE = """
+<b>Nothing  Found in the image</b>
+"""
+    PRED_PUMP_OFF = "Off"
+    PRED_PUMP_ON = "On"

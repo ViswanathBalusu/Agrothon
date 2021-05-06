@@ -3,9 +3,9 @@
 """
 @File    :   AlertBot.py
 @Path    :   agrothon/
-@Time    :   2021/05/4
+@Time    :   2021/05/6
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.1
+@Version :   1.0.3
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Intruder alert bot
 """
@@ -32,18 +32,29 @@ def alerts_handler():
                 pt.align[LANG.DET_NO] = "c"
                 pt.padding_width = 0
                 only_h = image["only_humans"]
-                if not only_h:
-                    image_url = get_image_url(image["uuid"])
-                    detections = image["detections"]
-                    hums = image["humans"]
-                    tot_dets = image["no_of_detections"]
-                    for obj in detections:
-                        pt.add_row([obj["type"], obj["count"]])
-                    at = image["at"]
-                    AlertBot.sendPhoto(
-                        chat_id=ALERT_CHANNEL_ID,
-                        photo=image_url,
-                        caption=LANG.ALERT_MESSAGE.format(at, tot_dets, hums, pt),
-                        parse_mode="HTML",
-                    )
-        time.sleep(60)
+                image_url = get_image_url(image["uuid"])
+                detections = image["detections"]
+                hums = image["humans"]
+                tot_dets = image["no_of_detections"]
+                for obj in detections:
+                    pt.add_row([obj["type"], obj["count"]])
+                at = image["at"]
+                try:
+                    if not only_h:
+                        AlertBot.sendPhoto(
+                            chat_id=ALERT_CHANNEL_ID,
+                            photo=image_url,
+                            caption=LANG.ALERT_MESSAGE.format(at, tot_dets, hums, pt),
+                            parse_mode="HTML",
+                        )
+                    else:
+                        AlertBot.sendPhoto(
+                            chat_id=ALERT_CHANNEL_ID,
+                            photo=image_url,
+                            caption=LANG.ALERT_MESSAGE.format(at, tot_dets, hums, pt),
+                            parse_mode="HTML",
+                            disable_notification=True,
+                        )
+                except Exception:
+                    pass
+        time.sleep(2)

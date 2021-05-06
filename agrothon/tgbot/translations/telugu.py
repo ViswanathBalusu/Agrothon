@@ -44,16 +44,19 @@ class Language(object):
     # Thing Speak Data
 
     MOISTURE_RESP = """
-<b>మట్టిలో తేమ 💧 : </b><code> {}%</code>
-
+<b>💧 మట్టిలో తేమ : </b><code> {}%</code>
+<b>🕒 చివరిసారి నవీకరించబడింది : </b><code> {}</code>
+<b>🕒 చివరి తనిఖీ : </b><code> {}</code>
 """
     HUMID_RESP = """
-<b>పొలంలో తేమ ⛅ : </b><code> {}%</code>
-
+<b>⛅ పొలంలో తేమ : </b><code> {}%</code>
+<b>🕒 చివరిసారి నవీకరించబడింది : </b><code> {}</code>
+<b>🕒 చివరి తనిఖీ : </b><code> {}</code>
 """
     TEMPE_RESP = """
-<b>పొలంలో ఉష్ణోగ్రత 🌡️ : </b><code> {}°C</code>
-
+<b>🌡️ పొలంలో ఉష్ణోగ్రత : </b><code> {}°C</code>
+<b>🕒 చివరిసారి నవీకరించబడింది: </b><code> {}</code>
+<b>🕒 చివరి తనిఖీ: </b><code> {}</code>
 """
     RAIN_YES_RESP = """
 <b>పొలంలో వర్షం పడుతోంది 🌧️</b>
@@ -67,8 +70,9 @@ class Language(object):
 <b>💧 తేమ : </b><code> {}%</code>
 <b>⛅ తడి: </b><code> {}%</code>
 <b>🌡️ ఉష్ణోగ్రత : </b><code> {}°C</code>
+<b>⛏️ పంప్ స్థితి ఎలా ఉండాలి : </b><code> {}</code>
 <b>🕒 చివరిసారి నవీకరించబడింది : </b><code> {}</code>
-
+<b>🕒 చివరి తనిఖీ : </b><code> {}</code>
 """
     # Pump
     PUMP_SWITCHED_ON = """
@@ -132,3 +136,15 @@ class Language(object):
     RAIN_PREDICT_ERR = """
 Error while
 """
+    IMAGE_MESSAGE = """
+<b>Objects has been Detected </b>
+<b>No of objects detected</b> : <code> {}</code>
+<b>No of people detected</b> : <code> {}</code>
+
+<pre>{}</pre>
+"""
+    ERR_IMAGE_RESPONSE = """
+<b>Nothing  Found in the image</b>
+"""
+    PRED_PUMP_OFF = "ఆఫ్"
+    PRED_PUMP_ON = "ఆన్"

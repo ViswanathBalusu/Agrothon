@@ -11,7 +11,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8.9
+          python-version: 3.8.10
       - name: Install Python lint libraries
         run: |
           pip install autopep8 autoflake isort black
@@ -25,13 +25,13 @@ jobs:
           --remove-unused-variables --ignore-init-module-imports .
       - name: lint with isort and black
         run: |
-          isort --skip agrothon/server/helpers/rainpredict.py --skip agrothon/server/helpers/yolov3_helper.py agrothon
+          isort agrothon
           black agrothon
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Code Auto Format"
           commit_options: "--no-verify"
           repository: .
-          commit_user_name: Chandra Kiran Viswanath Balusu[bot]
+          commit_user_name: Chandra Kiran Viswanath Balusu
           commit_user_email: 67821176+viswanathbalusu@users.noreply.github.com
-          commit_author: Chandra Kiran Viswanath Balusu[bot] <67821176+viswanathbalusu@users.noreply.github.com>
+          commit_author: Chandra Kiran Viswanath Balusu <67821176+viswanathbalusu@users.noreply.github.com>

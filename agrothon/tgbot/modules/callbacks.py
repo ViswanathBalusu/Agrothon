@@ -3,9 +3,9 @@
 """
 @File    :   callbacks.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/3
+@Time    :   2021/05/6
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.0
+@Version :   1.0.3
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Callbacks Module for telegram Keyboards
 """
@@ -22,28 +22,33 @@ from ..translations import setLang
 async def callback_sensors(client, message):
     response = await sensor_get_latest()
     if response is not None:
+        last_read = response["last_read"]
+        up_at = response["updated_at"]
         if message.data == "moisture":
             await message.message.edit_text(
-                text=LANG.MOISTURE_RESP.format(response["moisture"]),
+                text=LANG.MOISTURE_RESP.format(response["moisture"], up_at, last_read),
                 reply_markup=sepkeyboard,
             )
         elif message.data == "humidity":
             await message.message.edit_text(
-                text=LANG.HUMID_RESP.format(response["humidity"]),
+                text=LANG.HUMID_RESP.format(response["humidity"], up_at, last_read),
                 reply_markup=sepkeyboard,
             )
         elif message.data == "temperature":
             await message.message.edit_text(
-                text=LANG.TEMPE_RESP.format(response["temperature"]),
+                text=LANG.TEMPE_RESP.format(response["temperature"], up_at, last_read),
                 reply_markup=sepkeyboard,
             )
         elif message.data == "complete":
+            pump_ = "ON" if response["pump_prediction"] else "OFF"
             await message.message.edit_text(
                 text=LANG.COMPLETE_RESP.format(
                     response["moisture"],
                     response["humidity"],
                     response["temperature"],
-                    response["updated_at"],
+                    pump_,
+                    up_at,
+                    last_read,
                 ),
                 reply_markup=sepkeyboard,
             )
