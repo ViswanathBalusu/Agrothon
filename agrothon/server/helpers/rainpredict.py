@@ -13,7 +13,6 @@
 from keras.models import model_from_json
 import tensorflow as tf
 import logging
-import os
 from typing import Optional, Dict
 import numpy as np
 import pandas as pd
