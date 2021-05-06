@@ -43,6 +43,7 @@ async def ping():
 async def root():
     return RedirectResponse("https://github.com/viswanathbalusu/agrothon")
 
+
 Agrothon.add_event_handler("startup", MDBClient.connect_db)
 Agrothon.add_event_handler("shutdown", MDBClient.close_mongo_connection)
 Agrothon.include_router(intruder.IntruderRouter)

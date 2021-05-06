@@ -11,13 +11,20 @@
 @Desc        :   Yolov3 Python3 Wrapper using tf2
 """
 
+import logging
+import os
 from pathlib import Path
+from typing import List, Optional, Tuple
+
+import cv2
+import numpy as np
+import tensorflow as tf
 from PIL import Image, ImageDraw, ImageFont
 from seaborn import color_palette
-import cv2
-from tensorflow.keras.regularizers import l2
+from tensorflow.keras import Model
 from tensorflow.keras.layers import (
     Add,
+    BatchNormalization,
     Concatenate,
     Conv2D,
     Input,
@@ -25,14 +32,8 @@ from tensorflow.keras.layers import (
     LeakyReLU,
     UpSampling2D,
     ZeroPadding2D,
-    BatchNormalization,
 )
-from tensorflow.keras import Model
-import tensorflow as tf
-import logging
-import os
-import numpy as np
-from typing import List, Tuple, Optional
+from tensorflow.keras.regularizers import l2
 
 tf.get_logger().setLevel("ERROR")
 tf.autograph.set_verbosity(3)

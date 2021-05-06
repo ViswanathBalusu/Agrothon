@@ -9,11 +9,14 @@
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Pyrogram Photo Filter to detect objects
 """
-from agrothon import LANG
-import uuid
 import os
-from ..Client import AgroBot, filters
+import uuid
+
 from prettytable import PrettyTable
+
+from agrothon import LANG
+
+from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import upload_file_to_api
 
 
@@ -24,7 +27,9 @@ async def photo_detect(client, message):
     init_msg = await message.reply_text("Downloading from telegram")
     downloaded_file = await client.download_media(message=message, file_name=path)
     if os.path.exists(downloaded_file):
-        proc_message = await init_msg.edit_text(f"Downloaded, Detecting Objects Please wait...")
+        proc_message = await init_msg.edit_text(
+            f"Downloaded, Detecting Objects Please wait..."
+        )
         status, image = await upload_file_to_api(downloaded_file)
         if status:
             pt = PrettyTable([LANG.OBJECTS, LANG.DET_NO])
@@ -40,7 +45,11 @@ async def photo_detect(client, message):
             for obj in detections:
                 pt.add_row([obj["type"], obj["count"]])
             await proc_message.delete()
-            await message.reply_photo(photo=image_url, quote=True, caption=LANG.IMAGE_MESSAGE.format(tot_dets, hums, pt), parse_mode="html")
+            await message.reply_photo(
+                photo=image_url,
+                quote=True,
+                caption=LANG.IMAGE_MESSAGE.format(tot_dets, hums, pt),
+                parse_mode="html",
+            )
         else:
             await message.reply_text(text=LANG.ERR_IMAGE_RESPONSE)
-

@@ -135,7 +135,7 @@ async def get_instant_image_url(uuid: str):
 async def upload_file_to_api(path):
     url = f"{API_BASE_URL}intruder/detect/instant?api_key={API_KEY}"
     with open(path, "rb") as file:
-        files = {'image': file}
+        files = {"image": file}
         async with aiohttp.ClientSession() as session:
             async with session.post(url=url, data=files) as response:
                 if response.status == 200:

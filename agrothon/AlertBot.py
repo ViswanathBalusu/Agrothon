@@ -55,6 +55,6 @@ def alerts_handler():
                             parse_mode="HTML",
                             disable_notification=True,
                         )
-                except Exception as e:
+                except Exception:
                     pass
         time.sleep(2)

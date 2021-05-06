@@ -144,7 +144,7 @@ Error while
 <pre>{}</pre>
 """
     ERR_IMAGE_RESPONSE = """
-<b>Nothing  Found in the image</b> 
+<b>Nothing  Found in the image</b>
 """
     PRED_PUMP_OFF = "ఆఫ్"
     PRED_PUMP_ON = "ఆన్"
