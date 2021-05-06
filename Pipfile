@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyrogram = "==1.2.9"
+tgcrypto = "==1.2.2"
+motor = "==2.4.0"
+fastapi = {extras = ["all"], version = "==0.63.0"}
+requests = "==2.25.1"
+python-dotenv = "==0.17.0"
+aiohttp = "==3.7.4.post0"
+python-telegram-bot = "*"
+pandas = "==1.2.4"
+numpy = "==1.19.5"
+tensorflow = "==2.4.1"
+prettytable = "==2.1.0"
+opencv-python = "==4.5.1.48"
+pillow = "==8.2.0"
+seaborn = "==0.11.1"
+Keras = "==2.4.3"
+scikit-learn = "==0.22.2.post1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

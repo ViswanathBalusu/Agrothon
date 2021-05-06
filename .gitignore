@@ -1,0 +1,9 @@
+*.pyc
+*.log
+*.session
+.idea/*
+*.session-journal
+Agrothon.txt
+*.pt
+data/models/yolo/weights/*
+AgroConfig.py

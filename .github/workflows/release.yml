@@ -1,0 +1,35 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Get weights
+        run: wget -q https://pjreddie.com/media/files/yolov3.weights -O data/models/yolo/yolov3.weights
+      - name: Make tar Archive of the data folder
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          tar -czf Agrothon-Data-v$VERSION.tar.gz data
+      - name: Upload all the data files to github Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Agrothon Release ${{ steps.get_version.outputs.VERSION }}
+          files: |
+            data/fonts/futur.ttf
+            data/models/pump/pump.sav
+            data/models/rainfall/india_rainfall.csv
+            data/models/rainfall/rainfall_model.h5
+            data/models/rainfall/rainfall_model.json
+            data/models/yolo/coco.names
+            data/models/yolo/yolov3.weights
+            Agrothon-Data-v*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
