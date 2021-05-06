@@ -74,6 +74,7 @@ scipy==1.6.3
 seaborn==0.11.1
 six==1.15.0
 starlette==0.13.6
+telegraph==1.4.1
 tensorboard==2.5.0
 tensorboard-data-server==0.6.0
 tensorboard-plugin-wit==1.8.0

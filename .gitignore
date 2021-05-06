@@ -7,3 +7,7 @@ Agrothon.txt
 *.pt
 data/models/yolo/weights/*
 AgroConfig.py
+test.py
+test.jpeg
+agrothon/tmp/*
+agrothon.env

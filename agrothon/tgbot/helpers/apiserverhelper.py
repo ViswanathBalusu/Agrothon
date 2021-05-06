@@ -3,9 +3,9 @@
 """
 @File    :   apiserverhelper.py
 @Path    :   agrothon/tgbot/helpers/
-@Time    :   2021/05/3
+@Time    :   2021/05/6
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.0
+@Version :   1.0.3
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   API Server request helper
 """
@@ -110,7 +110,7 @@ def get_image_uuids():
 
 
 def get_image_url(uuid: str):
-    url = f"{API_BASE_URL}intruder/image/{uuid}?api_key={API_KEY}"
+    url = f"{API_BASE_URL}intruder/detect/image/{uuid}?api_key={API_KEY}"
     return url
 
 
@@ -125,3 +125,27 @@ async def get_rainfall_prediction(state: str, district: str):
         return response
     else:
         return None
+
+
+async def get_instant_image_url(uuid: str):
+    url = f"{API_BASE_URL}intruder/detect/instant/{uuid}?api_key={API_KEY}"
+    return url
+
+
+async def upload_file_to_api(path):
+    url = f"{API_BASE_URL}intruder/detect/instant?api_key={API_KEY}"
+    with open(path, "rb") as file:
+        files = {'image': file}
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url=url, data=files) as response:
+                if response.status == 200:
+                    try:
+                        data = await response.json()
+                        image_url = await get_instant_image_url(data["uuid"])
+                        del data["uuid"]
+                        data["image_url"] = image_url
+                        return True, data
+                    except AttributeError:
+                        return False, None
+                else:
+                    return False, None
