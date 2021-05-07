@@ -14,7 +14,7 @@ import uuid
 
 from prettytable import PrettyTable
 
-from agrothon import LANG, ALERT_CHANNEL_ID
+from agrothon import LANG
 
 from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import upload_file_to_api
