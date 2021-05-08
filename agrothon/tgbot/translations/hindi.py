@@ -3,9 +3,9 @@
 """
 @File    :   hindi.py
 @Path    :   agrothon/tgbot/translations/
-@Time    :   2021/05/4
+@Time    :   2021/05/8
 @Author  :   github.com/xavierxross
-@Version :   1.0.4
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Hindi translations
 """
@@ -104,7 +104,7 @@ class Language(object):
     SETTINGS = "⚙️ सेटिंग ⚙️"
     LANG = "🌐 भाषा बदलें 🌐"
     SELECT_LANG = "पसंदीदा भाषा का चयन करें"
-    LANG_CHANGED = "Language has been Changed to हिंदी"
+    LANG_CHANGED = "भाषा बदलने की प्रतीक्षा करें"
     OBJECTS = "वस्तुओं"
     DET_NO = "मिल गया"
     ALERT_MESSAGE = """
@@ -150,3 +150,44 @@ class Language(object):
 """
     PRED_PUMP_OFF = "ऑफ"
     PRED_PUMP_ON = "वन"
+    STATS = """
+<b>Uptime :</b><code> {}</code>
+<b>Disk Space :</b><code> {}</code>
+<b>Used :</b><code> {}</code>
+<b>Free :</b><code> {}</code>
+<b>CPU Usage :</b><code> {}%</code>
+<b>RAM :</b><code> {}%</code>
+<b>Uploaded :</b><code> {}</code>
+<b>Downloaded :</b><code> {}</code>
+"""
+    DL_TG = "Downloading from Telegram"
+    PROC_IMAGE = "Downloaded, Detecting Objects please wait..."
+    RESTART = "Restarting, please wait...."
+    RESTART_DONE = "Restarted Successfully!"
+    RESTART_CALLBACK = "Restart"
+    WEATHER_FETCHING = "Fetching Weather, Please Wait"
+    HELP_MESSAGE = """
+<code>/{}</code> : Weather Status of your City
+<code>/{}</code> : Predict rainfall of your region
+<code>/{}</code> : Get your field status and manage your pump
+<code>/{}</code> : Change settings of your Bot
+<code>/{}</code> : Get the server stats
+<code>/{}</code> : Check ping
+<code>/{}</code> : Get the log of the server
+<code>/{}</code> : Restart the server
+<code>/{}</code> : To get this message
+
+<code>To detect objects in an image just send the image</code>
+"""
+    START = """
+Hey, I am <code>Agrothon</code>
+
+ - you can monitor your farm
+ - Change pump status  to on or off
+ - Get weather
+ - Detect Objects in an image
+ - Predict rainfall for your region
+"""
+    PING_START = "Starting Ping"
+    PING_FINAL = "Measured Ping : {}"
+    LANG_SET = "हिंदी को पसंदीदा भाषा के रूप में सेट करना सफल रहा"

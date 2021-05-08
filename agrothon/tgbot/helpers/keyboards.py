@@ -3,9 +3,9 @@
 """
 @File    :   keyboards.py
 @Path    :   agrothon/tgbot/helpers/
-@Time    :   2021/05/3
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.0
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Keyboards used in the telegram bot
 """
@@ -91,7 +91,8 @@ def backkey(callback):
 
 settingskey = InlineKeyboardMarkup(
     [
-        [InlineKeyboardButton("⬅️ " + LANG.LANG, callback_data="lang")],
+        [InlineKeyboardButton(LANG.LANG, callback_data="lang")],
+        [InlineKeyboardButton("🔄 " + LANG.RESTART_CALLBACK, callback_data="restart")],
         [InlineKeyboardButton("🛑 " + LANG.QUIT, callback_data="exit")],
     ]
 )

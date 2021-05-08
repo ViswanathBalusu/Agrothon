@@ -3,21 +3,21 @@
 """
 @File    :   rainfall.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/4
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.1
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Rainfall prediction module for Telegram bot
 """
 from prettytable import PrettyTable
 
-from agrothon import DISTRICT, LANG, STATE
+from agrothon import DISTRICT, LANG, STATE, RAIN_COMMAND
 
 from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import get_rainfall_prediction
 
 
-@AgroBot.on_message(filters.command(["rainpredict"]))
+@AgroBot.on_message(filters.command([RAIN_COMMAND]))
 async def rainfall_predict(client, message):
     data = await get_rainfall_prediction(STATE, DISTRICT)
     if data is not None:
