@@ -10,7 +10,7 @@ COPY . .
 RUN chmod 777 /app/ && \
     apt-get update && \
     # This Will install missing Dependencies for Opencv to run
-    apt-get install python3-opencv && \
+    apt-get install -y python3-opencv && \
     # Clean apt cache
     apt-get clean && \
     # Get the weights from the latest release
