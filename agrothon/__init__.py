@@ -3,14 +3,14 @@
 """
 @File    :   __init__.py
 @Path    :   agrothon/
-@Time    :   2021/05/6
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.3
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Initialization Module for Agrothon
 """
 
-__VERSION__ = "1.0.3"
+__VERSION__ = "1.1.0"
 
 import logging
 import os
@@ -48,6 +48,9 @@ LOGGER = logging.getLogger(__name__)
 # Importing Variables from Config
 
 SERVER_TIME = time.time()
+TIME_Z = Config.TIME_ZONE
+os.environ["TZ"] = Config.TIME_ZONE
+time.tzset()
 LANGUAGE = Config.LANGUAGE
 OPEN_WEATHER_API = Config.OPEN_WEATHER_API
 TELEGRAM_APP_ID = Config.TELEGRAM_APP_ID
@@ -63,5 +66,17 @@ ALERT_CHANNEL_ID = Config.ALERT_CHANNEL_ID
 DISTRICT = Config.DISTRICT
 STATE = Config.STATE
 DB_URL = Config.DB_URL
+
+# Commands
+STATS_COMMAND = Config.STATS_COMMAND
+FIELD_COMMAND = Config.FIELD_COMMAND
+SETTINGS_COMMAND = Config.SETTINGS_COMMAND
+WEATHER_COMMAND = Config.WEATHER_COMMAND
+LOG_COMMAND = Config.LOG_COMMAND
+HELP_COMMAND = Config.HELP_COMMAND
+RAIN_COMMAND = Config.RAIN_COMMAND
+RESTART_COMMAND = Config.RESTART_COMMAND
+PING_COMMAND = Config.PING_COMMAND
+
 
 MDBClient = MongoClient(DB_URL)

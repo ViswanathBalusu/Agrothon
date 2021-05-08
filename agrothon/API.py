@@ -3,18 +3,20 @@
 """
 @File    :   API.py
 @Path    :   agrothon/
-@Time    :   2021/05/6
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.3
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Main module which starts API Server
 """
 import logging
+import os
+import time
 
-from fastapi import FastAPI, Security
+from fastapi import FastAPI, Request, Security
 from fastapi.responses import RedirectResponse
 
-from agrothon import __VERSION__, MDBClient
+from agrothon import __VERSION__, TIME_Z, MDBClient
 
 from .server.helpers.api_key_helper import verify_api_key
 from .server.routers import intruder, openweather, pump, rain_predict, sensors
@@ -22,6 +24,9 @@ from .server.routers import intruder, openweather, pump, rain_predict, sensors
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("multpart").setLevel(logging.WARNING)
+
+os.environ["TZ"] = TIME_Z
+time.tzset()
 
 
 Agrothon = FastAPI(
@@ -32,6 +37,15 @@ Agrothon = FastAPI(
     openapi_url="/Agrothon.json",
     dependencies=[Security(verify_api_key)],
 )
+
+
+@Agrothon.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(round(process_time * 1000, 3)) + " ms"
+    return response
 
 
 @Agrothon.get("/ping", tags=["utils"])

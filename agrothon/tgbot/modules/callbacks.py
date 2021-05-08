@@ -3,17 +3,22 @@
 """
 @File    :   callbacks.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/6
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.3
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Callbacks Module for telegram Keyboards
 """
+import os
+from sys import executable
+
+import dotenv
+
+from agrothon import LANG
 
 from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import *
 from ..helpers.keyboards import *
-from ..translations import setLang
 
 
 @AgroBot.on_callback_query(
@@ -103,34 +108,58 @@ async def pumpque(client, message):
             )
 
 
+def language_handler(mid, cid):
+    with open(".setlangfile", "w") as r_file:
+        r_file.truncate(0)
+        r_file.write(f"{cid}\n{mid}")
+    os.execl(executable, executable, "-m", "agrothon")
+
+
 @AgroBot.on_callback_query(filters.regex(pattern="^eng|tel|tam|hin$"))
 async def languages(client, message):
     if message.data == "eng":
-        LANGUAGE = "english"
-        LANG = setLang(LANGUAGE)
-        await message.message.edit_text(
+        _lang = "english"
+        os.environ["DEF_LANG"] = _lang
+        dotenv.set_key("agrothon.env", "DEF_LANG", _lang)
+        langmsg = await message.message.edit_text(
             text=LANG.LANG_CHANGED, reply_markup=backkey("lang")
         )
+        language_handler(langmsg.message_id, langmsg.chat.id)
     elif message.data == "tel":
-        LANGUAGE = "telugu"
-        LANG = setLang(LANGUAGE)
-        await message.message.edit_text(
+        _lang = "telugu"
+        os.environ["DEF_LANG"] = _lang
+        dotenv.set_key("agrothon.env", "DEF_LANG", _lang)
+        langmsg = await message.message.edit_text(
             text=LANG.LANG_CHANGED, reply_markup=backkey("lang")
         )
+        language_handler(langmsg.message_id, langmsg.chat.id)
     elif message.data == "tam":
-        LANGUAGE = "tamil"
-        LANG = setLang(LANGUAGE)
-        await message.message.edit_text(
+        _lang = "tamil"
+        os.environ["DEF_LANG"] = _lang
+        dotenv.set_key("agrothon.env", "DEF_LANG", _lang)
+        langmsg = await message.message.edit_text(
             text=LANG.LANG_CHANGED, reply_markup=backkey("lang")
         )
+        language_handler(langmsg.message_id, langmsg.chat.id)
     elif message.data == "hin":
-        LANGUAGE = "hindi"
-        LANG = setLang(LANGUAGE)
-        await message.message.edit_text(
+        _lang = "hindi"
+        os.environ["DEF_LANG"] = _lang
+        dotenv.set_key("agrothon.env", "DEF_LANG", _lang)
+        langmsg = await message.message.edit_text(
             text=LANG.LANG_CHANGED, reply_markup=backkey("lang")
         )
+        language_handler(langmsg.message_id, langmsg.chat.id)
 
 
 @AgroBot.on_callback_query(filters.regex(pattern="^lang$"))
 async def lang_change(client, message):
     await message.message.edit_text(text=LANG.SELECT_LANG, reply_markup=languageskey)
+
+
+@AgroBot.on_callback_query(filters.regex(pattern="^restart$"))
+async def restart_callback(client, message):
+    restart_msg = await message.message.edit_text(text=LANG.RESTART)
+    with open(".restartfile", "w") as r_file:
+        r_file.truncate(0)
+        r_file.write(f"{restart_msg.chat.id}\n{restart_msg.message_id}")
+    os.execl(executable, executable, "-m", "agrothon")

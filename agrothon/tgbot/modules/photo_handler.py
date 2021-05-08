@@ -3,9 +3,9 @@
 """
 @File    :   photo_handler.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/6
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.3
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Pyrogram Photo Filter to detect objects
 """
@@ -20,16 +20,14 @@ from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import upload_file_to_api
 
 
-@AgroBot.on_message(filters.photo)
+@AgroBot.on_message(filters.photo & filters.private)
 async def photo_detect(client, message):
     temp_uuid = str(uuid.uuid4())
     path = f"tmp/{temp_uuid}.jpg"
-    init_msg = await message.reply_text("Downloading from telegram")
+    init_msg = await message.reply_text(text=LANG.DL_TG)
     downloaded_file = await client.download_media(message=message, file_name=path)
     if os.path.exists(downloaded_file):
-        proc_message = await init_msg.edit_text(
-            f"Downloaded, Detecting Objects Please wait..."
-        )
+        proc_message = await init_msg.edit_text(text=LANG.PROC_IMAGE)
         status, image = await upload_file_to_api(downloaded_file)
         if status:
             pt = PrettyTable([LANG.OBJECTS, LANG.DET_NO])
@@ -37,7 +35,6 @@ async def photo_detect(client, message):
             pt.align[LANG.DET_NO] = "c"
             pt.padding_width = 0
             pt.format = True
-            # only_h = image["only_humans"]
             image_url = image["image_url"]
             detections = image["detections"]
             hums = image["humans"]
@@ -52,4 +49,5 @@ async def photo_detect(client, message):
                 parse_mode="html",
             )
         else:
-            await message.reply_text(text=LANG.ERR_IMAGE_RESPONSE)
+            await proc_message.edit_text(text=LANG.ERR_IMAGE_RESPONSE)
+        os.remove(downloaded_file)

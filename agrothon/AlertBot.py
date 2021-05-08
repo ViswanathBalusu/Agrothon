@@ -3,12 +3,13 @@
 """
 @File    :   AlertBot.py
 @Path    :   agrothon/
-@Time    :   2021/05/6
+@Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.3
+@Version :   1.1.0
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Intruder alert bot
 """
+import os
 import time
 
 from prettytable import PrettyTable
@@ -57,4 +58,20 @@ def alerts_handler():
                         )
                 except Exception:
                     pass
-        time.sleep(2)
+        time.sleep(1)
+
+
+def restart_check():
+    if os.path.isfile(".restartfile"):
+        with open(".restartfile") as f:
+            chat_id, msg_id = map(int, f)
+        AlertBot.edit_message_text(LANG.RESTART_DONE, chat_id, msg_id)
+        os.remove(".restartfile")
+
+
+def language_change_check():
+    if os.path.isfile(".setlangfile"):
+        with open(".setlangfile") as f:
+            chat_id, msg_id = map(int, f)
+        AlertBot.edit_message_text(LANG.LANG_SET, chat_id, msg_id)
+        os.remove(".setlangfile")
