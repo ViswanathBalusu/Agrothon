@@ -11,7 +11,7 @@
 """
 from prettytable import PrettyTable
 
-from agrothon import DISTRICT, LANG, STATE, RAIN_COMMAND
+from agrothon import DISTRICT, LANG, RAIN_COMMAND, STATE
 
 from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import get_rainfall_prediction

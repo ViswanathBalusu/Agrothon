@@ -45,4 +45,4 @@ class Config(object):
     LANGUAGE = os.environ.get("DEF_LANG", "english")
     API_KEY = os.environ.get("API_KEY", "Agrothon")
     DB_URL = os.environ.get("DB_URL", "mongodb://localhost:27017/")
-    TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata" )
+    TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata")

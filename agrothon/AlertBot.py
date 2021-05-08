@@ -9,8 +9,9 @@
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Intruder alert bot
 """
-import time
 import os
+import time
+
 from prettytable import PrettyTable
 from telegram.ext import Updater
 
