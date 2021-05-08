@@ -16,6 +16,18 @@ from agrothon import DISTRICT, LANG, RAIN_COMMAND, STATE
 from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import get_rainfall_prediction
 
+MONTHS = [
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+]
+
 
 @AgroBot.on_message(filters.command([RAIN_COMMAND]))
 async def rainfall_predict(client, message):
@@ -27,7 +39,7 @@ async def rainfall_predict(client, message):
         pt.align[LANG.MONTH] = "l"
         pt.align[LANG.RAINFALL.format(units)] = "c"
         pt.padding_width = 0
-        for month in LANG.MONTHS:
+        for month in MONTHS:
             pt.add_row([month, predictions[month]])
         await message.reply_text(
             text=LANG.RAIN_PREDICT.format(STATE, DISTRICT, pt), parse_mode="HTML"
