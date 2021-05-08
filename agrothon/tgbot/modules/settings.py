@@ -11,8 +11,21 @@
 """
 import os
 import time
-from agrothon import LANG, SETTINGS_COMMAND, RESTART_COMMAND, HELP_COMMAND, PING_COMMAND, STATS_COMMAND, FIELD_COMMAND, WEATHER_COMMAND, LOG_COMMAND, RAIN_COMMAND
 from sys import executable
+
+from agrothon import (
+    FIELD_COMMAND,
+    HELP_COMMAND,
+    LANG,
+    LOG_COMMAND,
+    PING_COMMAND,
+    RAIN_COMMAND,
+    RESTART_COMMAND,
+    SETTINGS_COMMAND,
+    STATS_COMMAND,
+    WEATHER_COMMAND,
+)
+
 from ..Client import AgroBot, filters
 from ..helpers.keyboards import settingskey
 
@@ -38,7 +51,19 @@ async def start(client, message):
 
 @AgroBot.on_message(filters.command([HELP_COMMAND]))
 async def help_command(client, message):
-    await message.reply_text(text=LANG.HELP_MESSAGE.format(WEATHER_COMMAND, RAIN_COMMAND, FIELD_COMMAND, SETTINGS_COMMAND, STATS_COMMAND, PING_COMMAND, LOG_COMMAND, RESTART_COMMAND, HELP_COMMAND))
+    await message.reply_text(
+        text=LANG.HELP_MESSAGE.format(
+            WEATHER_COMMAND,
+            RAIN_COMMAND,
+            FIELD_COMMAND,
+            SETTINGS_COMMAND,
+            STATS_COMMAND,
+            PING_COMMAND,
+            LOG_COMMAND,
+            RESTART_COMMAND,
+            HELP_COMMAND,
+        )
+    )
 
 
 @AgroBot.on_message(filters.command([PING_COMMAND]))

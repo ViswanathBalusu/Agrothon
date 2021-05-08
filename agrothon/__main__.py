@@ -11,8 +11,10 @@
 """
 import logging
 from threading import Thread
+
 from agrothon import LOGGER
-from .AlertBot import alerts_handler, restart_check, language_change_check
+
+from .AlertBot import alerts_handler, language_change_check, restart_check
 from .tgbot.Client import AgroBot
 
 logging.getLogger("pyrogram").setLevel(logging.WARNING)

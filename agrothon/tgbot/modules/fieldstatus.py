@@ -9,7 +9,7 @@
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Field Status Command handler
 """
-from agrothon import LANG, FIELD_COMMAND
+from agrothon import FIELD_COMMAND, LANG
 
 from ..Client import AgroBot, filters
 from ..helpers.keyboards import fieldkey
