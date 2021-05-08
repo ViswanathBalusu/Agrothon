@@ -14,7 +14,7 @@ RUN chmod 777 /app/ && \
     # Clean apt cache
     apt-get clean && \
     # Get the weights from the latest release
-    wget -q https://github.com/viswanathbalusu/Agrothon/releases/latest/download/yolov3.weights -O /app/data/models/yolo/yolo.weights
+    wget -q https://github.com/viswanathbalusu/Agrothon/releases/latest/download/yolov3.weights -O /app/data/models/yolo/yolov3.weights
 
 # Installing all the requirements
 RUN pip3 -q install --no-cache-dir -r requirements.txt
