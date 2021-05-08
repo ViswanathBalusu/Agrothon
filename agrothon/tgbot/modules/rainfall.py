@@ -39,8 +39,10 @@ async def rainfall_predict(client, message):
         pt.align[LANG.MONTH] = "l"
         pt.align[LANG.RAINFALL.format(units)] = "c"
         pt.padding_width = 0
+        i = 0
         for month in MONTHS:
-            pt.add_row([month, predictions[month]])
+            pt.add_row([LANG.MONTHS[i], predictions[month]])
+            i += 1
         await message.reply_text(
             text=LANG.RAIN_PREDICT.format(STATE, DISTRICT, pt), parse_mode="HTML"
         )
