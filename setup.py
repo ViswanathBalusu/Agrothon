@@ -1,9 +1,17 @@
 from setuptools import setup, find_packages
 from agrothon import __VERSION__ as VER
+import pathlib
+
+CWD = pathlib.Path(__file__).parent
+
+README = (CWD / "README.md").read_text()
+
 setup(
     name='Agrothon',
     version=VER,
     packages=find_packages(),
+    long_description=README,
+    long_description_content_type="text/markdown",
     url='https://github.com/viswanathbalusu/agrothon',
     license='GPL3.0',
     author='viswanathbalusu',
