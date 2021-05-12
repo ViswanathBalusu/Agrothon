@@ -10,7 +10,7 @@
 @Desc    :   Weather Command handler
 """
 
-from agrothon import DEF_CITY, LANG, WEATHER_COMMAND
+from agrothon import DEF_CITY, LANG
 
 from ..helpers.apiserverhelper import open_weather
 

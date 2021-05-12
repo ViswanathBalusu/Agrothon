@@ -16,7 +16,7 @@ from typing import Optional
 
 import psutil
 
-from agrothon import LANG, LOG_COMMAND, SERVER_TIME, STATS_COMMAND
+from agrothon import LANG, SERVER_TIME
 
 
 def get_readable_file_size(size_in_bytes) -> Optional[str]:

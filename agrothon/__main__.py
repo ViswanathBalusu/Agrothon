@@ -12,18 +12,41 @@
 import logging
 from threading import Thread
 
-from agrothon import BOT_TOKEN, LOGGER, TELEGRAM_API_HASH, TELEGRAM_APP_ID, FIELD_COMMAND, RAIN_COMMAND, SETTINGS_COMMAND, RESTART_COMMAND, HELP_COMMAND, PING_COMMAND, STATS_COMMAND, LOG_COMMAND, WEATHER_COMMAND
+from pyrogram import Client, filters
+from pyrogram.handlers import CallbackQueryHandler, MessageHandler
+
+from agrothon import (
+    BOT_TOKEN,
+    FIELD_COMMAND,
+    HELP_COMMAND,
+    LOG_COMMAND,
+    LOGGER,
+    PING_COMMAND,
+    RAIN_COMMAND,
+    RESTART_COMMAND,
+    SETTINGS_COMMAND,
+    STATS_COMMAND,
+    TELEGRAM_API_HASH,
+    TELEGRAM_APP_ID,
+    WEATHER_COMMAND,
+)
 
 from .AlertBot import alerts_handler, language_change_check, restart_check
-from pyrogram import Client, filters
-from pyrogram.handlers import MessageHandler, CallbackQueryHandler
-from .tgbot.modules.callbacks import callback_sensors, backcbq, pumpque, languages, lang_change, restart_callback
+from .tgbot.modules.callbacks import (
+    backcbq,
+    callback_sensors,
+    lang_change,
+    languages,
+    pumpque,
+    restart_callback,
+)
 from .tgbot.modules.fieldstatus import field
 from .tgbot.modules.photo_handler import photo_detect
 from .tgbot.modules.rainfall import rainfall_predict
-from .tgbot.modules.settings import settings, restart, start, help_command, ping_command
-from .tgbot.modules.utils import stats, send_log
+from .tgbot.modules.settings import help_command, ping_command, restart, settings, start
+from .tgbot.modules.utils import send_log, stats
 from .tgbot.modules.weather import weather
+
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("telegram").setLevel(logging.INFO)
@@ -38,22 +61,31 @@ AgroBot = Client(
 )
 
 # Callback Query handlers
-cb_sensors = CallbackQueryHandler(callback_sensors, filters=filters.regex(pattern="^moisture|humidity|temperature|complete$"))
+cb_sensors = CallbackQueryHandler(
+    callback_sensors,
+    filters=filters.regex(pattern="^moisture|humidity|temperature|complete$"),
+)
 AgroBot.add_handler(cb_sensors)
 
 back_cbq = CallbackQueryHandler(backcbq, filters=filters.regex(pattern="^back|exit$"))
 AgroBot.add_handler(back_cbq)
 
-pump_que = CallbackQueryHandler(pumpque, filters=filters.regex(pattern="^pumpstat|pumpon|pumpoff|refresh|bot$"))
+pump_que = CallbackQueryHandler(
+    pumpque, filters=filters.regex(pattern="^pumpstat|pumpon|pumpoff|refresh|bot$")
+)
 AgroBot.add_handler(pump_que)
 
-languages_ = CallbackQueryHandler(languages, filters=filters.regex(pattern="^eng|tel|tam|hin$"))
+languages_ = CallbackQueryHandler(
+    languages, filters=filters.regex(pattern="^eng|tel|tam|hin$")
+)
 AgroBot.add_handler(languages_)
 
 lang_hand = CallbackQueryHandler(lang_change, filters=filters.regex(pattern="^lang$"))
 AgroBot.add_handler(lang_hand)
 
-rsrt_hand = CallbackQueryHandler(restart_callback, filters=filters.regex(pattern="^restart$"))
+rsrt_hand = CallbackQueryHandler(
+    restart_callback, filters=filters.regex(pattern="^restart$")
+)
 AgroBot.add_handler(rsrt_hand)
 
 # Command Handlers
@@ -102,4 +134,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
