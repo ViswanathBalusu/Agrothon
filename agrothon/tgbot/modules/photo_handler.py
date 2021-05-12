@@ -3,9 +3,9 @@
 """
 @File    :   photo_handler.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/8
+@Time    :   2021/05/9
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.1.5
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Pyrogram Photo Filter to detect objects
 """
@@ -16,11 +16,9 @@ from prettytable import PrettyTable
 
 from agrothon import LANG
 
-from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import upload_file_to_api
 
 
-@AgroBot.on_message(filters.photo & filters.private)
 async def photo_detect(client, message):
     temp_uuid = str(uuid.uuid4())
     path = f"tmp/{temp_uuid}.jpg"

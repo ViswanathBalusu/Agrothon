@@ -11,3 +11,6 @@ test.py
 test.jpeg
 agrothon/tmp/*
 agrothon.env
+/dist/
+/Agrothon.egg-info/
+/build/

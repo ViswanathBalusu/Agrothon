@@ -3,9 +3,9 @@
 """
 @File    :   rainfall.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/8
+@Time    :   2021/05/9
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.1.5
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   General utils module for Telegram bot
 """
@@ -16,9 +16,7 @@ from typing import Optional
 
 import psutil
 
-from agrothon import LANG, LOG_COMMAND, SERVER_TIME, STATS_COMMAND
-
-from ..Client import AgroBot, filters
+from agrothon import LANG, SERVER_TIME
 
 
 def get_readable_file_size(size_in_bytes) -> Optional[str]:
@@ -54,7 +52,6 @@ def get_readable_time(seconds: int) -> str:
     return result
 
 
-@AgroBot.on_message(filters.command([STATS_COMMAND]))
 async def stats(client, message):
     current_time = get_readable_time((time.time() - SERVER_TIME))
     total, used, free = shutil.disk_usage(".")
@@ -72,6 +69,5 @@ async def stats(client, message):
     )
 
 
-@AgroBot.on_message(filters.command([LOG_COMMAND]))
 async def send_log(client, message):
     await message.reply_document("Agrothon.txt")
