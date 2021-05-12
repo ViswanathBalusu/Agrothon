@@ -3,9 +3,9 @@
 """
 @File    :   callbacks.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/8
+@Time    :   2021/05/9
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.1.5
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Callbacks Module for telegram Keyboards
 """
@@ -16,14 +16,10 @@ import dotenv
 
 from agrothon import LANG
 
-from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import *
 from ..helpers.keyboards import *
 
 
-@AgroBot.on_callback_query(
-    filters.regex(pattern="^moisture|humidity|temperature|complete$")
-)
 async def callback_sensors(client, message):
     response = await sensor_get_latest()
     if response is not None:
@@ -59,7 +55,6 @@ async def callback_sensors(client, message):
             )
 
 
-@AgroBot.on_callback_query(filters.regex(pattern="^back|exit$"))
 async def backcbq(client, message):
     if message.data == "back":
         await message.message.edit_text(text=LANG.MAIN_MENU, reply_markup=fieldkey)
@@ -67,9 +62,6 @@ async def backcbq(client, message):
         await message.message.delete()
 
 
-@AgroBot.on_callback_query(
-    filters.regex(pattern="^pumpstat|pumpon|pumpoff|refresh|bot$")
-)
 async def pumpque(client, message):
     if message.data == "pumpstat" or message.data == "refresh":
         response = await pump_get()
@@ -115,7 +107,6 @@ def language_handler(mid, cid):
     os.execl(executable, executable, "-m", "agrothon")
 
 
-@AgroBot.on_callback_query(filters.regex(pattern="^eng|tel|tam|hin$"))
 async def languages(client, message):
     if message.data == "eng":
         _lang = "english"
@@ -151,12 +142,10 @@ async def languages(client, message):
         language_handler(langmsg.message_id, langmsg.chat.id)
 
 
-@AgroBot.on_callback_query(filters.regex(pattern="^lang$"))
 async def lang_change(client, message):
     await message.message.edit_text(text=LANG.SELECT_LANG, reply_markup=languageskey)
 
 
-@AgroBot.on_callback_query(filters.regex(pattern="^restart$"))
 async def restart_callback(client, message):
     restart_msg = await message.message.edit_text(text=LANG.RESTART)
     with open(".restartfile", "w") as r_file:

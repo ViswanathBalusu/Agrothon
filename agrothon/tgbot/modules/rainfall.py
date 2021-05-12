@@ -3,9 +3,9 @@
 """
 @File    :   rainfall.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/8
+@Time    :   2021/05/9
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.1.5
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Rainfall prediction module for Telegram bot
 """
@@ -13,7 +13,6 @@ from prettytable import PrettyTable
 
 from agrothon import DISTRICT, LANG, RAIN_COMMAND, STATE
 
-from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import get_rainfall_prediction
 
 MONTHS = [
@@ -29,7 +28,6 @@ MONTHS = [
 ]
 
 
-@AgroBot.on_message(filters.command([RAIN_COMMAND]))
 async def rainfall_predict(client, message):
     data = await get_rainfall_prediction(STATE, DISTRICT)
     if data is not None:

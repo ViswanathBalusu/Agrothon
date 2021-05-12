@@ -3,20 +3,18 @@
 """
 @File    :   weather.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/8
+@Time    :   2021/05/9
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.1.5
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Weather Command handler
 """
 
 from agrothon import DEF_CITY, LANG, WEATHER_COMMAND
 
-from ..Client import AgroBot, filters
 from ..helpers.apiserverhelper import open_weather
 
 
-@AgroBot.on_message(filters.command([WEATHER_COMMAND]))
 async def weather(client, message):
     init = await message.reply_text(LANG.WEATHER_FETCHING)
     response = await open_weather(DEF_CITY)
