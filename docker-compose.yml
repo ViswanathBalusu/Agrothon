@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  web:
+    image: ghcr.io/viswanathbalusu/agrothon:latest
+    environment:
+      - TELEGRAM_APP_ID="123456"
+      - TELEGRAM_API_HASH=""
+      - BOT_TOKEN="123456:abcdefgh"
+      - API_BASE_URL="https://yourserverurl"
+      - ALERT_CHANNEL_ID="-100123456789"
+      - STATE="Andhra Pradesh"
+      - DISTRICT="East Godavari"
+      - DEF_LANG="english"
+      - OPEN_WEATHER_API=""
+      - DEF_CIFY="Mandapeta"
+      - API_KEY="Agrothon"
+      - DB_URL="MongoDB Database URL"
+      - API_PORT=8000
+    ports:
+      - "8000:8000"
