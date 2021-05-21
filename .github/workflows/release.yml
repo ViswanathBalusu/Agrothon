@@ -21,7 +21,7 @@ jobs:
         run: |
           VERSION=${{ steps.get_version.outputs.VERSION }}
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          tar -czf Agrothon-Data-v$VERSION.tar.gz data
+          tar -czf Agrothon-Data.tar.gz data
       - name: Upload all the data files to github Release
         uses: softprops/action-gh-release@v1
         with:
@@ -34,7 +34,7 @@ jobs:
             data/models/rainfall/rainfall_model.json
             data/models/yolo/coco.names
             data/models/yolo/yolov3.weights
-            Agrothon-Data-v*.tar.gz
+            Agrothon-Data.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install deps fro Pypi Release
