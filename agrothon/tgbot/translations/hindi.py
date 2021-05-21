@@ -151,43 +151,43 @@ class Language(object):
     PRED_PUMP_OFF = "ऑफ"
     PRED_PUMP_ON = "वन"
     STATS = """
-<b>Uptime :</b><code> {}</code>
-<b>Disk Space :</b><code> {}</code>
-<b>Used :</b><code> {}</code>
-<b>Free :</b><code> {}</code>
-<b>CPU Usage :</b><code> {}%</code>
+<b>अपटाइम:</b><code> {}</code>
+<b>डिस्क स्थान :</b><code> {}</code>
+<b>प्रयुक्त :</b><code> {}</code>
+<b>निःशुल्क :</b><code> {}</code>
+<b>CPU उपयोग:</b><code> {}%</code>
 <b>RAM :</b><code> {}%</code>
-<b>Uploaded :</b><code> {}</code>
-<b>Downloaded :</b><code> {}</code>
+<b>अपलोड किया गया:</b><code> {}</code>
+<b>डाउनलोड किया गया:</b><code> {}</code>
 """
-    DL_TG = "Downloading from Telegram"
-    PROC_IMAGE = "Downloaded, Detecting Objects please wait..."
-    RESTART = "Restarting, please wait...."
-    RESTART_DONE = "Restarted Successfully!"
-    RESTART_CALLBACK = "Restart"
-    WEATHER_FETCHING = "Fetching Weather, Please Wait"
+    DL_TG = "टेलीग्राम से डाउनलोड करना"
+    PROC_IMAGE = "डाउनलोड किया गया, वस्तुओं का पता लगाना कृपया प्रतीक्षा करें..."
+    RESTART = "पुनः प्रारंभ हो रहा है, कृपया प्रतीक्षा करें...."
+    RESTART_DONE = "सफलतापूर्वक पुनरारंभ किया गया!"
+    RESTART_CALLBACK = "पुनः आरंभ करें"
+    WEATHER_FETCHING = "मौसम आ रहा है, कृपया प्रतीक्षा करें"
     HELP_MESSAGE = """
-<code>/{}</code> : Weather Status of your City
-<code>/{}</code> : Predict rainfall of your region
-<code>/{}</code> : Get your field status and manage your pump
-<code>/{}</code> : Change settings of your Bot
-<code>/{}</code> : Get the server stats
-<code>/{}</code> : Check ping
-<code>/{}</code> : Get the log of the server
-<code>/{}</code> : Restart the server
-<code>/{}</code> : To get this message
+<code>/{}</code> : आपके शहर की मौसम स्थिति
+<code>/{}</code> : अपने क्षेत्र की वर्षा की भविष्यवाणी करें
+<code>/{}</code> : अपने क्षेत्र की स्थिति प्राप्त करें और अपने पंप का प्रबंधन करें
+<code>/{}</code> : अपने बॉट की सेटिंग बदलें
+<code>/{}</code> : सर्वर आँकड़े प्राप्त करें
+<code>/{}</code> : पिंग चेक करें
+<code>/{}</code> : सर्वर का लॉग प्राप्त करें
+<code>/{}</code> : सर्वर को पुनरारंभ करें
+<code>/{}</code> : यह संदेश पाने के लिए
 
-<code>To detect objects in an image just send the image</code>
+<code>किसी इमेज में ऑब्जेक्ट का पता लगाने के लिए बस इमेज भेजें</code>
 """
     START = """
-Hey, I am <code>Agrothon</code>
+अरे, मैं हूं <code>एग्रोथॉन</code>
 
- - you can monitor your farm
- - Change pump status  to on or off
- - Get weather
- - Detect Objects in an image
- - Predict rainfall for your region
+  - आप अपने खेत की निगरानी कर सकते हैं
+  - पंप की स्थिति को चालू या बंद में बदलें
+  - मौसम प्राप्त करें
+  - एक छवि में वस्तुओं का पता लगाएं
+  - अपने क्षेत्र के लिए वर्षा की भविष्यवाणी करें
 """
-    PING_START = "Starting Ping"
-    PING_FINAL = "Measured Ping : {}"
+    PING_START = "पिंग शुरू करना"
+    PING_FINAL = "मापा पिंग : {}"
     LANG_SET = "हिंदी को पसंदीदा भाषा के रूप में सेट करना सफल रहा"
