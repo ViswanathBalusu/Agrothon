@@ -15,7 +15,7 @@ setup(
     url='https://github.com/viswanathbalusu/agrothon',
     license='GPL3.0',
     author='viswanathbalusu',
-    author_emai='ckvbalusu@gmail.com',
+    author_email='ckvbalusu@gmail.com',
     include_package_data=True,
     description='A Field Monitoring Bot',
     platforms="any",
@@ -42,6 +42,7 @@ setup(
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Operating System :: POSIX :: Linux",
         "Development Status :: 5 - Production/Stable"
@@ -49,8 +50,9 @@ setup(
     python_requires=">=3.8",
     entry_points={
         "console_scripts":[
-            "agrothon = agrothon.__main__:main",
-            "agroserver = agrothon.API:Agrothon"
+            "agrothon = agrothon.__main__:main"
         ]
-    }
+
+    },
+    scripts=['bin/agroserver'],
 )
