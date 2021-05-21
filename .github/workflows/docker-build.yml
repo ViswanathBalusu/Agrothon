@@ -29,6 +29,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
           echo VERSION=$VERSION
           echo "Building"
+          sleep 60
           docker build . -t ${{ env.IMAGE }}:$VERSION
           echo "Pushing"
           docker push ${{ env.IMAGE }}:$VERSION

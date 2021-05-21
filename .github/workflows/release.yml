@@ -39,7 +39,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install deps fro Pypi Release
         run: |
-          pip install setuptools wheel twine
+          pip -q install setuptools wheel twine
+          pip -q install -r requirements.txt
       - name: Publish to pypi
         env:
           TWINE_USERNAME: __token__
