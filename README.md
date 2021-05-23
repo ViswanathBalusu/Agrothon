@@ -20,9 +20,9 @@
    - Telegram Bot
   
 - API Server handles Everything, All the routes are shown below
-   - ![API Docs](.github/Apiserver.png?raw=true)
+  ![API Docs](.github/Apiserver.png?raw=true)
 - Telegram bot is just a frontend for the whole Project
-   - ![Telegram Bot](.github/telegrambot.png)
+  ![Telegram Bot](.github/telegrambot.png)
 - [Agrothon-Client](https://github.com/viswanathbalusu/Agrothon-Client) Sends Sensor data, Intruder images to the API Server which will be analysed there and Stored in the Database
 
 ## Installation
@@ -38,7 +38,7 @@
       pip install Agrothon
       ```
   - There are two commands in Agrothon
-    - `agroserver` - Which actually starts the Uvicorn Server on a Unix Domain Socket, So you should use a Reverse proxy(Preferably Caddy)
+    - `agroserver` - Which actually starts the Uvicorn Server on a Unix Domain Socket, So you should use a Reverse proxy (Preferably Caddy)
     - `agrothon` - Which starts the telegram bot
 
 - Via **Docker**
