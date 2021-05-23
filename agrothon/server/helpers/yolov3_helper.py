@@ -534,6 +534,9 @@ except FileNotFoundError:
     exit(1)
 
 
+INCLUDED_CLASSES = ["person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"]
+INC_CLASS_NUMBERS = [1, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+
 def yolo_detect(
     _image: bytes,
 ) -> Tuple[
@@ -550,6 +553,15 @@ def yolo_detect(
         _img_ = tf.expand_dims(img_raw, 0)
         img__ = transform_images(_img_, 416)
         _boxes, _scores, _classes, _nums = _yolo(img__)
+
+        for i in range(_nums[0]):
+            deleted_classes = 0
+            if int(classes[0][i]) not in INC_CLASS_NUMBERS:
+                del _classes[0][i]
+                deleted_classes += 1
+
+
+            
         if _nums[0] != 0:
             detections_list = []
             humans = 0
