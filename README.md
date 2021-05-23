@@ -30,17 +30,19 @@
 ## Installation
 - Via **pip** 
   - First fill the variables in `agrothon-sample.env` and rename it to `agrothon.env`
-  - you can extend all tha variables that are in the [Base Config](agrothon/BaseConfig.py)
+  - you can extend all tha variables from [Base Config](agrothon/BaseConfig.py)
   - Get the latest [Release](https://github.com/viswanathbalusu/Agrothon/releases/latest/download/Agrothon-Data.tar.gz) of data directory and untar in it the same directory where you placed `agrothon.env`
+      
       ```
       tar -xzf Agrothon-Data.tar.gz
       ```
-  - Then Create a Virtual Environment(Optional but Recommended)
+  - Then Create a Virtual Environment (Optional but Recommended) and then install Agrothon with
+      
       ```
       pip install Agrothon
       ```
   - There are two commands in Agrothon
-    - `agroserver` - Which actually starts the Uvicorn Server on a Unix Domain Socket, So you should use a Reverse proxy (Preferably Caddy)
+    - `agroserver` - Which actually starts the Uvicorn Server on a Unix Domain Socket at `/usr/agrothon.sock`, So you should use a Reverse proxy (Preferably Caddy)
     - `agrothon` - Which starts the telegram bot
 
 - Via **Docker**
@@ -69,5 +71,7 @@
 | API_KEY | An API Key for your Server | Agrothon | True | This is like a Password for your API Server, So choose Wisely (Alphanumeric only) |
 | DB_URL | MongoDB URL | mongodb+srv://xxx:xxx@hmmm.mongodb.net | True | Database to Store All the data, get this from [MongoDB](https://mongodb.com) |
 
-  *if there are Other ports too the Bot will Work but it may not be able to post images
+  `* if there are Other ports too the Bot will Work but it may not be able to post images`
 
+## Note
+- We are using heavy modules like tensorflow and Yolov3, so make sure you have atleast 2.5GB RAM free to get this running
