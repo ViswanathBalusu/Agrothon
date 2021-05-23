@@ -16,7 +16,8 @@ RUN chmod 777 /app/ && \
     # Get Data From Releases
     wget -q https://github.com/viswanathbalusu/Agrothon/releases/latest/download/Agrothon-Data.tar.gz && \
     tar -xzf Agro*.tar.gz && rm -rf Agro*.tar.gz && \
-    wget -q https://github.com/viswanathbalusu/Agrothon/raw/main/server.sh && chmod a+x server.sh
+    wget -q https://github.com/viswanathbalusu/Agrothon/raw/main/server.sh && chmod a+x server.sh && \
+    wget -q https://github.com/viswanathbalusu/Agrothon/raw/main/Caddyfile -O /Caddyfile
 # Installing all the requirements
 RUN pip3 -q --no-cache-dir install Agrothon
 

@@ -30,7 +30,7 @@ class Language(object):
 
     MOISTURE = "Moisture"
     HUMIDITY = "Humidity"
-    TEMPERATURE = "Temparature"
+    TEMPERATURE = "Temperature"
     RAIN = "Rainfall Status"
     PUMP_STATUS = "Pump Status"
     COMPLETE_INFO = "Complete info"
@@ -38,7 +38,7 @@ class Language(object):
     PUMP_OFF = "Switch OFF"
     PUMP_ON = "Switch On"
     BACK = "Back"
-    BOT_PRED = "Turn on Bot Predicton"
+    BOT_PRED = "Turn on Bot Prediction"
     REFRESH = "Refresh Status"
 
     # Thing Speak Data

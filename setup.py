@@ -17,7 +17,7 @@ setup(
     author='viswanathbalusu',
     author_email='ckvbalusu@gmail.com',
     include_package_data=True,
-    description='A Field Monitoring Bot',
+    description='A Farm Monitoring Bot',
     platforms="any",
     install_requires=[
         "pyrogram==1.2.9",

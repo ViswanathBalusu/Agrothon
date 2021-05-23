@@ -1,8 +1,9 @@
 name: Code Formatter
-"on":
+on :
   push:
     branches:
-      - dev
+      - readme
+      - main
 jobs:
   PEP8:
     runs-on: ubuntu-latest

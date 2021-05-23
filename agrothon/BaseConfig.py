@@ -20,13 +20,14 @@ class Config(object):
 
     # Telegram
     TELEGRAM_APP_ID = int(os.environ.get("TELEGRAM_APP_ID", -1))
-    TELEGRAM_API_HASH = os.environ.get("TELEGRAM_API_HASH", "")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-    PORT = os.environ.get("PORT", "10808")
-    API_BASE_URL = os.environ.get("API_BASE_URL", f"http://localhost:{PORT}/")
+    TELEGRAM_API_HASH = os.environ.get("TELEGRAM_API_HASH", None)
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
+    API_BASE_URL = os.environ.get("API_BASE_URL", None)
     ALERT_CHANNEL_ID = int(os.environ.get("ALERT_CHANNEL_ID", -1))
-    STATE = os.environ.get("STATE", "Andhra Pradesh")
-    DISTRICT = os.environ.get("DISTRICT", "East Godavari")
+    STATE = os.environ.get("STATE", None)
+    DISTRICT = os.environ.get("DISTRICT", None)
+    DEF_CITY = os.environ.get("DEF_CITY", None)
+    LANGUAGE = os.environ.get("DEF_LANG", "english")
 
     # Bot Commands
     STATS_COMMAND = os.environ.get("STATS_COMMAND", "stats")
@@ -40,9 +41,7 @@ class Config(object):
     PING_COMMAND = os.environ.get("PING_COMMAND", "ping")
 
     # API Server
-    OPEN_WEATHER_API = os.environ.get("OPEN_WEATHER_API", "")
-    DEF_CITY = os.environ.get("DEF_CITY", "")
-    LANGUAGE = os.environ.get("DEF_LANG", "english")
-    API_KEY = os.environ.get("API_KEY", "Agrothon")
-    DB_URL = os.environ.get("DB_URL", "mongodb://localhost:27017/")
+    OPEN_WEATHER_API = os.environ.get("OPEN_WEATHER_API", None)
+    API_KEY = os.environ.get("API_KEY", None)
+    DB_URL = os.environ.get("DB_URL", None)
     TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata")

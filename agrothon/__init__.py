@@ -5,12 +5,12 @@
 @Path    :   agrothon/
 @Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.2.4
+@Version :   1.2.5
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Initialization Module for Agrothon
 """
 
-__VERSION__ = "1.2.4"
+__VERSION__ = "1.2.5"
 
 import logging
 import os
@@ -60,8 +60,9 @@ LANG = setLang(LANGUAGE)
 DEF_CITY = Config.DEF_CITY
 API_KEY = Config.API_KEY
 API_BASE_URL = Config.API_BASE_URL
-if not API_BASE_URL.endswith("/"):
-    API_BASE_URL = API_BASE_URL + "/"
+if API_BASE_URL is not None:
+    if not API_BASE_URL.endswith("/"):
+        API_BASE_URL = API_BASE_URL + "/"
 ALERT_CHANNEL_ID = Config.ALERT_CHANNEL_ID
 DISTRICT = Config.DISTRICT
 STATE = Config.STATE
@@ -78,5 +79,21 @@ RAIN_COMMAND = Config.RAIN_COMMAND
 RESTART_COMMAND = Config.RESTART_COMMAND
 PING_COMMAND = Config.PING_COMMAND
 
+if DB_URL is None or API_KEY is None or OPEN_WEATHER_API is None:
+    LOGGER.error("Variables Required to start Server are not Provided")
+    exit(1)
+
+if (
+    TELEGRAM_APP_ID == -1
+    or TELEGRAM_API_HASH is None
+    or BOT_TOKEN is None
+    or API_BASE_URL is None
+    or ALERT_CHANNEL_ID == -1
+    or STATE is None
+    or DISTRICT is None
+    or DEF_CITY is None
+):
+    LOGGER.error("Variables Required to start bot are not Provided")
+    exit(1)
 
 MDBClient = MongoClient(DB_URL)
