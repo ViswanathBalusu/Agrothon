@@ -433,7 +433,6 @@ def load_darknet_weights(model, weights_file):
 def draw_outputs(img, outputs, class_names):
     colors = (np.array(color_palette("hls", 80)) * 255).astype(np.uint8)
     boxes, objectness, classes, nums = outputs
-    boxes, objectness, classes, nums = boxes[0], objectness[0], classes[0], nums[0]
     wh = np.flip(img.shape[0:2])
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = Image.fromarray(img)
@@ -507,8 +506,8 @@ except FileNotFoundError:
     exit(1)
 
 
-INCLUDED_CLASSES = ["person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"]
-INC_CLASS_NUMBERS = [1, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+# INCLUDED_CLASSES = ["person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"]
+INC_CLASS_NUMBERS = [0, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
 def yolo_detect(
     _image: bytes,
@@ -526,34 +525,33 @@ def yolo_detect(
         _img_ = tf.expand_dims(img_raw, 0)
         img__ = transform_images(_img_, 416)
         _boxes, _scores, _classes, _nums = _yolo(img__)
-
+        filtered_boxes, filtered_scores, filtered_classes, new_nums = [], [], [], 0
         for i in range(_nums[0]):
-            if int(classes[0][i]) not in INC_CLASS_NUMBERS:
-                del _classes[0][i]
-                del _boxes[0][i]
-                del _scores[0][i]
-                _nums[0] -= 1
-            
-        if _nums[0] > 0:
+            if int(_classes[0][i]) in INC_CLASS_NUMBERS:
+                filtered_classes.append(int(_classes[0][i]))
+                filtered_boxes.append(_boxes[0][i])
+                filtered_scores.append(_scores[0][i])
+                new_nums += 1
+        if new_nums > 0:
             detections_list = []
             humans = 0
             only_humans = False
             _objects = {}
             _confidences = {}
-            for i in range(_nums[0]):
-                if str(_class_names[int(_classes[0][i])]) in _objects:
+            for i in range(new_nums):
+                if str(_class_names[filtered_classes[i]]) in _objects:
 
-                    _objects[str(_class_names[int(_classes[0][i])])] += 1
-                    _confidences[str(_class_names[int(_classes[0][i])])].append(
-                        round(float(np.array(_scores[0][i])) * 100, 2)
+                    _objects[str(_class_names[filtered_classes[i]])] += 1
+                    _confidences[str(_class_names[filtered_classes[i]])].append(
+                        round(float(np.array(filtered_scores[i])) * 100, 2)
                     )
                 else:
-                    _objects[str(_class_names[int(_classes[0][i])])] = 1
-                    _confidences[str(_class_names[int(_classes[0][i])])] = [
-                        round(float(np.array(_scores[0][i])) * 100, 2)
+                    _objects[str(_class_names[filtered_classes[i]])] = 1
+                    _confidences[str(_class_names[filtered_classes[i]])] = [
+                        round(float(np.array(filtered_scores[i])) * 100, 2)
                     ]
 
-                if (_class_names[int(_classes[0][i])]) == "person":
+                if (_class_names[int(filtered_classes[i])]) == "person":
                     humans += 1
             for i in _objects:
                 detection_dict = {
@@ -567,11 +565,11 @@ def yolo_detect(
                 only_humans = True
             cv2_img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
             cv2_img = draw_outputs(
-                cv2_img, (_boxes, _scores, _classes, _nums), _class_names
+                cv2_img, (filtered_boxes, filtered_scores, filtered_classes, new_nums), _class_names
             )
             is_success, cv2_img = cv2.imencode(".jpg", cv2_img)
             LOGGER.debug(f"Finished Detecting, Objects found : {str(detections_list)}")
-            return True, int(_nums[0]), detections_list, humans, only_humans, cv2_img
+            return True, int(new_nums), detections_list, humans, only_humans, cv2_img
         else:
             LOGGER.debug(f"Finished Detecting, Nothing Found in the image")
             return False, None, None, None, None, None
