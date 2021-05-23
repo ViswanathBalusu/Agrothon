@@ -20,8 +20,10 @@
    - Telegram Bot
   
 - API Server handles Everything, All the routes are shown below
+
   ![API Docs](.github/Apiserver.png?raw=true)
 - Telegram bot is just a frontend for the whole Project
+
   ![Telegram Bot](.github/telegrambot.png)
 - [Agrothon-Client](https://github.com/viswanathbalusu/Agrothon-Client) Sends Sensor data, Intruder images to the API Server which will be analysed there and Stored in the Database
 
@@ -47,3 +49,25 @@
    - Download [agrothon.env](./agrothon-sample.env) and Fill the Variables (can be extended from [Base Config](agrothon/BaseConfig.py))
       - ```wget -q https://viswanathbalusu.github.io/Agrothon/agrothon-sample.env -O agrothon.env```
    - Finally do `docker-compose up` it will pull the image from container registry and run the services 
+
+## Variables in `agrothon.env`
+
+| Variable | Value | Example | Required | Description |
+| :---: | :---: | :---: | :---: | :---: |
+| - | - | Bot Configuration | - | - |
+| TELEGRAM_APP_ID | Telegram API APP ID | 1234567 | True | Can be obtained from [Telegram](https://my.telegram.org/auth) |
+| TELEGRAM_API_HASH | Telegram API Hash | 022d29afxxxxxxxxf825980a7974ec42 | True | Can be obtained from [Telegram](https://my.telegram.org/auth) |
+| BOT_TOKEN | Telegram Bot Token | 123456:abcdefghij | True | Can be obtained from [Bot Father](https://t.me/botfather)
+| API_BASE_URL | Api base Host URL | https://mysite.com/ | True | Must be host Without port (i.e Port 80/443* only) |
+| ALERT_CHANNEL_ID | Alert channel ID | -100123456789 | True | Intruder Alerts will be posted to this channel |
+| STATE | name of the state | Andhra Pradesh | True | Must be a state in India 🤔|
+| DISTRICT | name of the district | East Godavari | True | name of your district |
+| DEF_LANG | Default Language | english | False | Can be choosen from `english`, `telugu`, `tamil`, `hindi` (Default is `english`)|
+| DEF_CITY | Default City | Vijayawada | True | City from which weather should be fetched |
+| - | - | Server Configuration | - | - |
+| OPEN_WEATHER_API | Open weather API Key| d6778a1acdd67c4xxxxxxe500e81987d | True | API to get the weather data of a particular region, Get this from [OpenWeather](https://openweathermap.org/api)|
+| API_KEY | An API Key for your Server | Agrothon | True | This is like a Password for your API Server, So choose Wisely (Alphanumeric only) |
+| DB_URL | MongoDB URL | mongodb+srv://xxx:xxx@hmmm.mongodb.net | True | Database to Store All the data, get this from [MongoDB](https://mongodb.com) |
+
+  *if there are Other ports too the Bot will Work but it may not be able to post images
+
