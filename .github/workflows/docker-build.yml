@@ -3,9 +3,6 @@ name: Agrothon Docker Container builds
 
 on:
   push:
-    branches:
-      - main
-      - dev
     tags:
       - v*
 
@@ -31,5 +28,6 @@ jobs:
           echo "Building"
           sleep 120
           docker build . -t ${{ env.IMAGE }}:$VERSION
+          docker tag ${{ env.IMAGE }}:$VERSION ${{ env.IMAGE }}:latest
           echo "Pushing"
-          docker push ${{ env.IMAGE }}:$VERSION
+          docker push --all-tags ${{ env.IMAGE }}

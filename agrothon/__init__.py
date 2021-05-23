@@ -79,21 +79,5 @@ RAIN_COMMAND = Config.RAIN_COMMAND
 RESTART_COMMAND = Config.RESTART_COMMAND
 PING_COMMAND = Config.PING_COMMAND
 
-if DB_URL is None or API_KEY is None or OPEN_WEATHER_API is None:
-    LOGGER.error("Variables Required to start Server are not Provided")
-    exit(1)
-
-if (
-    TELEGRAM_APP_ID == -1
-    or TELEGRAM_API_HASH is None
-    or BOT_TOKEN is None
-    or API_BASE_URL is None
-    or ALERT_CHANNEL_ID == -1
-    or STATE is None
-    or DISTRICT is None
-    or DEF_CITY is None
-):
-    LOGGER.error("Variables Required to start bot are not Provided")
-    exit(1)
 
 MDBClient = MongoClient(DB_URL)
