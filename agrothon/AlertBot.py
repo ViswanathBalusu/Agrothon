@@ -5,13 +5,13 @@
 @Path    :   agrothon/
 @Time    :   2021/05/8
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.2.6
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Intruder alert bot
 """
 import os
 import time
-
+from logging import getLogger
 from prettytable import PrettyTable
 from telegram.ext import Updater
 
@@ -19,6 +19,7 @@ from agrothon import ALERT_CHANNEL_ID, BOT_TOKEN, LANG
 
 from .tgbot.helpers.apiserverhelper import get_image_url, get_image_uuids
 
+LOGGER = getLogger(__name__)
 tg = Updater(token=BOT_TOKEN)
 AlertBot = tg.bot
 
@@ -56,7 +57,8 @@ def alerts_handler():
                             parse_mode="HTML",
                             disable_notification=True,
                         )
-                except Exception:
+                except Exception as e:
+                    LOGGER.error(f"Error Occurred While Getting or Posting Alerts : {e}")
                     pass
         time.sleep(1)
 

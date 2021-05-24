@@ -5,7 +5,7 @@
 @Path    :   agrothon/server/routers/
 @Time    :   2021/05/3
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.2
+@Version :   1.2.6
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   OpenWeather data router
 """
@@ -28,7 +28,7 @@ OpenWeatherRouter = APIRouter(
 
 
 @OpenWeatherRouter.get("/{city}", response_class=ORJSONResponse, response_model=Weather)
-async def image_get(city: str):
+async def weather_get(city: str):
     """
     Open Weather API Wrapper
     - **city** : City from which the weather data should be fetched (Optional)

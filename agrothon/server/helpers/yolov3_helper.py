@@ -6,7 +6,7 @@
 @Time        :   2021/05/5
 @Author      :   github.com/zzh8829
 @Modifed by  :   Chandra Kiran Viswanath Balusu
-@Version     :   1.0.2
+@Version     :   1.2.6
 @Contact     :   ckvbalusu@gmail.com
 @Desc        :   Yolov3 Python3 Wrapper using tf2
 """
@@ -511,6 +511,7 @@ INC_CLASS_NUMBERS = [0, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
 def yolo_detect(
     _image: bytes,
+    filter: bool = True,
 ) -> Tuple[
     Optional[bool],
     Optional[int],
@@ -526,12 +527,19 @@ def yolo_detect(
         img__ = transform_images(_img_, 416)
         _boxes, _scores, _classes, _nums = _yolo(img__)
         filtered_boxes, filtered_scores, filtered_classes, new_nums = [], [], [], 0
-        for i in range(_nums[0]):
-            if int(_classes[0][i]) in INC_CLASS_NUMBERS:
-                filtered_classes.append(int(_classes[0][i]))
-                filtered_boxes.append(_boxes[0][i])
-                filtered_scores.append(_scores[0][i])
-                new_nums += 1
+        if filter:
+            for i in range(_nums[0]):
+                if int(_classes[0][i]) in INC_CLASS_NUMBERS:
+                    filtered_classes.append(int(_classes[0][i]))
+                    filtered_boxes.append(_boxes[0][i])
+                    filtered_scores.append(_scores[0][i])
+                    new_nums += 1
+        else:
+            filtered_classes = _classes[0]
+            filtered_boxes = _boxes[0]
+            filtered_scores = _scores[0]
+            new_nums = _nums[0]
+
         if new_nums > 0:
             detections_list = []
             humans = 0

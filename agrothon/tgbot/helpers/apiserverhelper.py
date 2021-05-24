@@ -5,7 +5,7 @@
 @Path    :   agrothon/tgbot/helpers/
 @Time    :   2021/05/6
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.3
+@Version :   1.2.6
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   API Server request helper
 """
@@ -13,8 +13,10 @@ from typing import Optional
 
 import aiohttp
 import requests
-
+from logging import getLogger
 from agrothon import API_BASE_URL, API_KEY
+
+LOGGER = getLogger(__name__)
 
 
 async def aiohttp_helper(
@@ -26,8 +28,10 @@ async def aiohttp_helper(
                 if response.status == 200:
                     try:
                         data = await response.json()
+                        LOGGER.debug(data)
                         return True, data
-                    except AttributeError:
+                    except AttributeError as e:
+                        LOGGER.error(e)
                         return False, None
                 else:
                     return False, None
@@ -36,8 +40,10 @@ async def aiohttp_helper(
                 if response.status == 200:
                     try:
                         data = await response.json()
+                        LOGGER.debug(data)
                         return True, data
-                    except AttributeError:
+                    except AttributeError as e:
+                        LOGGER.error(e)
                         return False, None
                 else:
                     return False, None
@@ -101,12 +107,18 @@ async def open_weather(city: str):
 def get_image_uuids():
     url = f"{API_BASE_URL}intruder/images/uuids?api_key={API_KEY}"
     headers = {"accept": "application/json"}
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        resp = response.json()
-        return resp
-    else:
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            resp = response.json()
+            LOGGER.info(f"Getting UUIDS, Response : {str(resp)}")
+            return resp
+        else:
+            return None
+    except Exception as e:
+        LOGGER.error(e)
         return None
+
 
 
 def get_image_url(uuid: str):
