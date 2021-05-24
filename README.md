@@ -64,8 +64,8 @@
       ```
   - There are two commands in Agrothon
     - `agroserver` - Which actually starts the Uvicorn Server on a Unix Domain Socket at `/usr/agrothon.sock`, So you should use a Reverse proxy (Preferably Caddy)
-    - `agrothon` - Which starts the telegram bot
-    - `agroserver` - Starts Both `agroserver` and `agrothon` with caddy reverse proxy
+    - `agrobot` - Which starts the telegram bot
+    - `agrothon` - Starts Both `agroserver` and `agrobot` with caddy reverse proxy
 
 - Via **Docker**
    - Download [Docker compose](./docker-compose.yml) and Map the ports according to your use
@@ -93,7 +93,8 @@
 | API_KEY | An API Key for your Server | Agrothon | True | This is like a Password for your API Server, So choose Wisely (Alphanumeric only) |
 | DB_URL | MongoDB URL | mongodb+srv://xxx:xxx@hmmm.mongodb.net | True | Database to Store All the data, get this from [MongoDB](https://mongodb.com) |
 | SENSOR_PRIORITY_INDEX | Moisture sensor priority | 2 | True | Which moisture sensor to use for predicting on/off the pump |
-  `* if there are Other ports too the Bot will Work but it may not be able to post images`
+  
+ `* if there are Other ports too the Bot will Work but it may not be able to post images`
 
 ## Note
 - We are using heavy modules like tensorflow and Yolov3, so make sure you have atleast 2.5GB RAM free to get this running
