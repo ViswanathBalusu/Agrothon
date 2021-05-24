@@ -29,16 +29,37 @@
 
 ## Installation
 - Via **pip** 
+  - Install Dependencies
+    
+    ```
+    mkdir agrothon && cd agrothon
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt-get install python3.8 wget
+    wget -q https://github.com/caddyserver/caddy/releases/download/v2.4.1/caddy_2.4.1_linux_amd64.tar.gz
+    tar xzf caddy_2.4.1_linux_amd64.tar.gz
+    rm -rf caddy_2.4.1_linux_amd64.tar.gz
+    chmod a+x caddy
+    mv caddy /usr/local/bin/caddy
+    wget -q https://github.com/viswanathbalusu/Agrothon/raw/main/Caddyfile -O Caddyfile
+    ```
   - First fill the variables in `agrothon-sample.env` and rename it to `agrothon.env`
+    
+    ```
+    wget -q https://github.com/viswanathbalusu/Agrothon/raw/main/agrothon-sample.env -O agrothon.env
+    ```
   - you can extend all tha variables from [Base Config](agrothon/BaseConfig.py)
   - Get the latest [Release](https://github.com/viswanathbalusu/Agrothon/releases/latest/download/Agrothon-Data.tar.gz) of data directory and untar in it the same directory where you placed `agrothon.env`
       
       ```
-      tar -xzf Agrothon-Data.tar.gz
+      wget -q https://github.com/viswanathbalusu/Agrothon/releases/latest/download/Agrothon-Data.tar.gz
+      tar -xzf Agrothon-Data.tar.gz && rm -rf Agrothon-Data.tar.gz
       ```
+  - Edit the `$API_PORT` in `Caddyfile` or Just Set `$API_PORT` in your Shell Environment.
   - Then Create a Virtual Environment (Optional but Recommended) and then install Agrothon with
       
       ```
+      python3.8 -m virtualenv venv
+      source venv/bin/activate
       pip install Agrothon
       ```
   - There are two commands in Agrothon
@@ -71,7 +92,7 @@
 | OPEN_WEATHER_API | Open weather API Key| d6778a1acdd67c4xxxxxxe500e81987d | True | API to get the weather data of a particular region, Get this from [OpenWeather](https://openweathermap.org/api)|
 | API_KEY | An API Key for your Server | Agrothon | True | This is like a Password for your API Server, So choose Wisely (Alphanumeric only) |
 | DB_URL | MongoDB URL | mongodb+srv://xxx:xxx@hmmm.mongodb.net | True | Database to Store All the data, get this from [MongoDB](https://mongodb.com) |
-
+| SENSOR_PRIORITY_INDEX | Moisture sensor priority | 2 | True | Which moisture sensor to use for predicting on/off the pump |
   `* if there are Other ports too the Bot will Work but it may not be able to post images`
 
 ## Note
