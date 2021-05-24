@@ -12,10 +12,3 @@ services:
     expose:
       - "8000"
     restart: unless-stopped
-  tgbot:
-    image: ghcr.io/viswanathbalusu/agrothon:latest
-    env_file:
-      - agrothon.env
-    depends_on:
-      - apiserver
-    command: agrothon

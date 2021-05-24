@@ -46,6 +46,6 @@ class Config(object):
     DB_URL = os.environ.get("DB_URL", None)
     TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata")
     try:
-        SENSOR_PRIORITY_INDEX = int(os.environ.get("SENSOR_PRIORITY", 1))
+        SENSOR_PRIORITY_INDEX = int(os.environ.get("SENSOR_PRIORITY_INDEX", 1))
     except BaseException:
         SENSOR_PRIORITY_INDEX = 1

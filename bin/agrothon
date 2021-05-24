@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-agroserver
+agroserver &
 sleep 30 # Wait for server startup
-agrobot
+agrobot &
+caddy run --config ./Caddyfile

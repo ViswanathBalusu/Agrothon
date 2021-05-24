@@ -5,12 +5,12 @@
 @Path    :   agrothon/
 @Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.2.7
+@Version :   1.2.8
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Initialization Module for Agrothon
 """
 
-__VERSION__ = "1.2.7"
+__VERSION__ = "1.2.8"
 
 import logging
 import os
