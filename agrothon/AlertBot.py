@@ -3,9 +3,9 @@
 """
 @File    :   AlertBot.py
 @Path    :   agrothon/
-@Time    :   2021/05/8
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.2.6
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Intruder alert bot
 """

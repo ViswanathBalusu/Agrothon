@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+agroserver
+sleep 30 # Wait for server startup
+agrobot

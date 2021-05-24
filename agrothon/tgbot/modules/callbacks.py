@@ -3,9 +3,9 @@
 """
 @File    :   callbacks.py
 @Path    :   agrothon/tgbot/modules/
-@Time    :   2021/05/9
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.5
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Callbacks Module for telegram Keyboards
 """
@@ -26,8 +26,12 @@ async def callback_sensors(client, message):
         last_read = response["last_read"]
         up_at = response["updated_at"]
         if message.data == "moisture":
+            msg = """"""
+            for i in range(response["no_of_sensors"]):
+                msg += LANG.MOISTURE_SENSOR.format(str(i), response["moisture"][i])
+            msg += LANG.MOISTURE_RESP.format(up_at, last_read)
             await message.message.edit_text(
-                text=LANG.MOISTURE_RESP.format(response["moisture"], up_at, last_read),
+                text=msg,
                 reply_markup=sepkeyboard,
             )
         elif message.data == "humidity":
@@ -41,16 +45,20 @@ async def callback_sensors(client, message):
                 reply_markup=sepkeyboard,
             )
         elif message.data == "complete":
-            pump_ = "ON" if response["pump_prediction"] else "OFF"
+            pump_ = LANG.PUMP_STATUS_ON if response["pump_prediction"] else LANG.PUMP_STATUS_OFF
+            msg = """"""
+            for i in range(response["no_of_sensors"]):
+                msg += LANG.COMPLETE_MOISTURE.format(str(i+1), response["moisture"][i])
+            msg += LANG.COMPLETE_RESP.format(
+                response["humidity"],
+                response["temperature"],
+                response["sensor_priority"],
+                pump_,
+                up_at,
+                last_read
+            )
             await message.message.edit_text(
-                text=LANG.COMPLETE_RESP.format(
-                    response["moisture"],
-                    response["humidity"],
-                    response["temperature"],
-                    pump_,
-                    up_at,
-                    last_read,
-                ),
+                text=msg,
                 reply_markup=sepkeyboard,
             )
 

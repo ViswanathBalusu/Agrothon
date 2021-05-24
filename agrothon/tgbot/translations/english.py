@@ -3,9 +3,9 @@
 """
 @File    :   english.py
 @Path    :   agrothon/tgbot/translations/
-@Time    :   2021/05/8
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   English translations
 """
@@ -41,11 +41,8 @@ class Language(object):
     BOT_PRED = "Turn on Bot Prediction"
     REFRESH = "Refresh Status"
 
-    # Thing Speak Data
-
-    MOISTURE_RESP = """
-<b>💧 Moisture in the Soil : </b><code> {}%</code>
-<b>🕒 Last Updated at: </b><code> {}</code>
+    MOISTURE_SENSOR = """<b>💧 Moisture in the Soil (Sensor {}): </b><code> {}%</code>\n"""
+    MOISTURE_RESP = """<b>🕒 Last Updated at: </b><code> {}</code>
 <b>🕒 Last Read at: </b><code> {}</code>
 """
     HUMID_RESP = """
@@ -66,11 +63,10 @@ class Language(object):
 <b>It's not raining 🌞</b>
 
 """
-    COMPLETE_RESP = """
-<b>💧 Moisture : </b><code> {}%</code>
-<b>⛅ Humidity : </b><code> {}%</code>
+    COMPLETE_MOISTURE = """<b>💧 Moisture (Sensor {}): </b><code> {}%</code>\n"""
+    COMPLETE_RESP = """<b>⛅ Humidity : </b><code> {}%</code>
 <b>🌡️ Temperature : </b><code> {}°C</code>
-<b>⛏️ Pump Should be : </b><code> {}</code>
+<b>⛏️ Pump Should be (by Sensor {}): </b><code> {}</code>
 <b>🕒 Last Updated at: </b><code> {}</code>
 <b>🕒 Last Read at: </b><code> {}</code>
 """
@@ -189,3 +185,5 @@ Hey, I am <code>Agrothon</code>
     PING_START = "Starting Ping"
     PING_FINAL = "Measured Ping : {}"
     LANG_SET = "English is successfully set as preferred language"
+    PUMP_STATUS_ON = "ON"
+    PUMP_STATUS_OFF = "OFF"

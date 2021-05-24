@@ -3,14 +3,14 @@
 """
 @File    :   __init__.py
 @Path    :   agrothon/
-@Time    :   2021/05/8
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.2.6
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Initialization Module for Agrothon
 """
 
-__VERSION__ = "1.2.6"
+__VERSION__ = "1.2.7"
 
 import logging
 import os
@@ -67,6 +67,7 @@ ALERT_CHANNEL_ID = Config.ALERT_CHANNEL_ID
 DISTRICT = Config.DISTRICT
 STATE = Config.STATE
 DB_URL = Config.DB_URL
+SENSOR_PRIORITY_INDEX = Config.SENSOR_PRIORITY_INDEX
 
 # Commands
 STATS_COMMAND = Config.STATS_COMMAND

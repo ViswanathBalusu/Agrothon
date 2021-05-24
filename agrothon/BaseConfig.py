@@ -3,9 +3,9 @@
 """
 @File    :   BaseConfig.py
 @Path    :   agrothon/
-@Time    :   2021/05/8
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.0
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Base Configuration for Agrothon
 """
@@ -45,3 +45,7 @@ class Config(object):
     API_KEY = os.environ.get("API_KEY", None)
     DB_URL = os.environ.get("DB_URL", None)
     TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata")
+    try:
+        SENSOR_PRIORITY_INDEX = int(os.environ.get("SENSOR_PRIORITY", 1))
+    except:
+        SENSOR_PRIORITY_INDEX = 1

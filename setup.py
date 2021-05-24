@@ -50,9 +50,9 @@ setup(
     python_requires=">=3.8",
     entry_points={
         "console_scripts":[
-            "agrothon = agrothon.__main__:main"
+            "agrobot = agrothon.__main__:main"
         ]
 
     },
-    scripts=['bin/agroserver'],
+    scripts=['bin/agroserver', 'bin/agrothon'],
 )

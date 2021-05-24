@@ -3,9 +3,9 @@
 """
 @File    :   apiserverhelper.py
 @Path    :   agrothon/tgbot/helpers/
-@Time    :   2021/05/6
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.2.6
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   API Server request helper
 """
@@ -16,7 +16,7 @@ import aiohttp
 import requests
 
 from agrothon import API_BASE_URL, API_KEY
-
+from json.decoder import JSONDecodeError
 LOGGER = getLogger(__name__)
 
 
@@ -118,6 +118,9 @@ def get_image_uuids():
             return None
     except Exception as e:
         LOGGER.error(e)
+        return None
+    except JSONDecodeError as e:
+        LOGGER.error(f"Json Decode Error")
         return None
 
 

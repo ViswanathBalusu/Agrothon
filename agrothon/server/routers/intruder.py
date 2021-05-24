@@ -3,9 +3,9 @@
 """
 @File    :   intruder.py
 @Path    :   agrothon/server/routers/
-@Time    :   2021/05/5
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.2
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Intruder Image Detection Router using Yolov3
 """

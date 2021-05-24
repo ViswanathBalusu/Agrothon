@@ -3,9 +3,9 @@
 """
 @File    :   response_models.py
 @Path    :   agrothon/server/helpers/
-@Time    :   2021/05/5
+@Time    :   2021/05/24
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.2
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Response and Accept Models
 """
@@ -58,23 +58,27 @@ class Weather(BaseModel):
 
 
 class Sensor(BaseModel):
-    moisture: float
+    no_of_sensors: int
+    moisture: List[float]
     humidity: float
     temperature: float
     updated_at: str
     pump_prediction: bool
+    sensor_priority: int
     last_read: Optional[str] = None
 
 
 class SensorData(BaseModel):
-    moisture: float
+    no_of_sensors: int
+    moisture: List[float]
     humidity: float
     temperature: float
 
     class Config:
         schema_extra = {
             "example": {
-                "moisture": 19.25,
+                "no_of_sensors": 2,
+                "moisture": [19.25, 56.25],
                 "humidity": 20.95,
                 "temperature": 35,
             }
@@ -82,17 +86,23 @@ class SensorData(BaseModel):
 
 
 class SensorBase(BaseModel):
-    moisture: int
+    no_of_sensors: int
+    moisture: List[float]
     humidity: int
     temperature: int
+    pump_prediction: bool
+    sensor_priority: int
     updated_at: str
 
     class Config:
         schema_extra = {
             "example": {
-                "moisture": 19.25,
+                "no_of_sensors": 2,
+                "moisture": [19.25, 56.25],
                 "humidity": 20.95,
                 "temperature": 35,
+                "pump_prediction": True,
+                "sensor_priority": 1,
                 "updated_at": "15:35:53 05/02/21",
             }
         }

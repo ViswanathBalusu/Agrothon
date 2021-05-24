@@ -5,7 +5,7 @@
 @Path    :   agrothon/server/routers/
 @Time    :   2021/05/5
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.0.2
+@Version :   1.2.7
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Sensors data post or get Routers
 """
@@ -17,7 +17,7 @@ from fastapi import APIRouter, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import ORJSONResponse
 
-from agrothon import MDBClient
+from agrothon import MDBClient, SENSOR_PRIORITY_INDEX
 
 from ..helpers.pump_prediction import predict_pump
 from ..helpers.response_models import (
@@ -50,11 +50,10 @@ async def sensor_get():
     try:
         n_docs = await _sensor.estimated_document_count()
         latest_doc_id = int(n_docs) - 1
-        data = await _sensor.find_one({"_id": latest_doc_id})
+        data = await _sensor.find_one({"_id": latest_doc_id}, {"_id": False})
         await _sensor.update_one(
             {"_id": latest_doc_id}, {"$set": {"last_read": time_date}}
         )
-        del data["_id"]
         j_resp = jsonable_encoder(data)
         LOGGER.debug(f"Fetched sensor data : {j_resp}")
         return ORJSONResponse(content=j_resp)
@@ -76,16 +75,9 @@ async def sensor_get_all():
     n_docs = await _sensor.estimated_document_count()
     sensor_data = []
     if n_docs != 0:
-        async for doc in _sensor.find().sort("_id").limit(n_docs):
-            sensor_data.append(
-                {
-                    "moisture": doc["moisture"],
-                    "humidity": doc["humidity"],
-                    "temperature": doc["temperature"],
-                    "updated_at": doc["updated_at"],
-                }
-            )
-        LOGGER.info(f"Fetched {n_docs} entires of sensor data")
+        async for doc in _sensor.find({}, {"_id": False, "last_read": False}).sort("_id").limit(n_docs):
+            sensor_data.append(jsonable_encoder(doc))
+        LOGGER.info(f"Fetched {n_docs} entries of sensor data")
         return ORJSONResponse(
             content={"no_of_entries": n_docs, "sensor_data": sensor_data}
         )
@@ -109,7 +101,7 @@ async def sensor_post(data: SensorData):
     time_date: str = now.strftime("%X %x")
     pump_data = await _pump.find_one({"_id": "pump"}, {"_id": False})
     pump_set = False
-    pump_stat = await predict_pump(data.moisture, data.temperature, data.humidity)
+    pump_stat = await predict_pump(data.moisture[SENSOR_PRIORITY_INDEX-1], data.temperature, data.humidity)
     try:
         try:
             if pump_data["by"] == "AI Bot":
@@ -130,10 +122,12 @@ async def sensor_post(data: SensorData):
         n_docs = await _sensor.estimated_document_count()
         new_doc_id = int(n_docs)
         data_dict = {
+            "no_of_sensors": data.no_of_sensors,
             "moisture": data.moisture,
             "humidity": data.humidity,
             "temperature": data.temperature,
             "pump_prediction": pump_stat,
+            "sensor_priority": SENSOR_PRIORITY_INDEX,
             "updated_at": time_date,
             "last_read": time_date,
         }
@@ -157,8 +151,8 @@ async def sensor_post(data: SensorData):
             LOGGER.debug(
                 f"Pump Status has been updated : {str(orjson.dumps(pump_dict))}"
             )
-        j_resp = jsonable_encoder({"Success": True, "pump_status_updated": pump_set})
-        LOGGER.debug(f"")
+        j_resp = {"Success": True, "pump_status_updated": pump_set}
+        LOGGER.debug(f"Sensor Post response : {str(j_resp)}")
         return ORJSONResponse(content=j_resp)
     except Exception as e:
         LOGGER.error(f"Error Occurred while Updating :{e}")
