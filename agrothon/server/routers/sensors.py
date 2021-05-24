@@ -17,7 +17,7 @@ from fastapi import APIRouter, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import ORJSONResponse
 
-from agrothon import MDBClient, SENSOR_PRIORITY_INDEX
+from agrothon import SENSOR_PRIORITY_INDEX, MDBClient
 
 from ..helpers.pump_prediction import predict_pump
 from ..helpers.response_models import (
@@ -75,7 +75,9 @@ async def sensor_get_all():
     n_docs = await _sensor.estimated_document_count()
     sensor_data = []
     if n_docs != 0:
-        async for doc in _sensor.find({}, {"_id": False, "last_read": False}).sort("_id").limit(n_docs):
+        async for doc in _sensor.find({}, {"_id": False, "last_read": False}).sort(
+            "_id"
+        ).limit(n_docs):
             sensor_data.append(jsonable_encoder(doc))
         LOGGER.info(f"Fetched {n_docs} entries of sensor data")
         return ORJSONResponse(
@@ -101,7 +103,9 @@ async def sensor_post(data: SensorData):
     time_date: str = now.strftime("%X %x")
     pump_data = await _pump.find_one({"_id": "pump"}, {"_id": False})
     pump_set = False
-    pump_stat = await predict_pump(data.moisture[SENSOR_PRIORITY_INDEX-1], data.temperature, data.humidity)
+    pump_stat = await predict_pump(
+        data.moisture[SENSOR_PRIORITY_INDEX - 1], data.temperature, data.humidity
+    )
     try:
         try:
             if pump_data["by"] == "AI Bot":

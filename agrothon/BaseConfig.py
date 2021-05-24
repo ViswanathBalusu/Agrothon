@@ -47,5 +47,5 @@ class Config(object):
     TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata")
     try:
         SENSOR_PRIORITY_INDEX = int(os.environ.get("SENSOR_PRIORITY", 1))
-    except:
+    except BaseException:
         SENSOR_PRIORITY_INDEX = 1

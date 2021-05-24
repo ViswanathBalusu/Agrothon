@@ -41,7 +41,9 @@ class Language(object):
     BOT_PRED = "Turn on Bot Prediction"
     REFRESH = "Refresh Status"
 
-    MOISTURE_SENSOR = """<b>💧 Moisture in the Soil (Sensor {}): </b><code> {}%</code>\n"""
+    MOISTURE_SENSOR = (
+        """<b>💧 Moisture in the Soil (Sensor {}): </b><code> {}%</code>\n"""
+    )
     MOISTURE_RESP = """<b>🕒 Last Updated at: </b><code> {}</code>
 <b>🕒 Last Read at: </b><code> {}</code>
 """

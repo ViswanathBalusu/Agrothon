@@ -45,17 +45,23 @@ async def callback_sensors(client, message):
                 reply_markup=sepkeyboard,
             )
         elif message.data == "complete":
-            pump_ = LANG.PUMP_STATUS_ON if response["pump_prediction"] else LANG.PUMP_STATUS_OFF
+            pump_ = (
+                LANG.PUMP_STATUS_ON
+                if response["pump_prediction"]
+                else LANG.PUMP_STATUS_OFF
+            )
             msg = """"""
             for i in range(response["no_of_sensors"]):
-                msg += LANG.COMPLETE_MOISTURE.format(str(i+1), response["moisture"][i])
+                msg += LANG.COMPLETE_MOISTURE.format(
+                    str(i + 1), response["moisture"][i]
+                )
             msg += LANG.COMPLETE_RESP.format(
                 response["humidity"],
                 response["temperature"],
                 response["sensor_priority"],
                 pump_,
                 up_at,
-                last_read
+                last_read,
             )
             await message.message.edit_text(
                 text=msg,

@@ -9,6 +9,7 @@
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   API Server request helper
 """
+from json.decoder import JSONDecodeError
 from logging import getLogger
 from typing import Optional
 
@@ -16,7 +17,7 @@ import aiohttp
 import requests
 
 from agrothon import API_BASE_URL, API_KEY
-from json.decoder import JSONDecodeError
+
 LOGGER = getLogger(__name__)
 
 
@@ -119,7 +120,7 @@ def get_image_uuids():
     except Exception as e:
         LOGGER.error(e)
         return None
-    except JSONDecodeError as e:
+    except JSONDecodeError:
         LOGGER.error(f"Json Decode Error")
         return None
 
