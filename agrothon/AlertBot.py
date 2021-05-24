@@ -12,6 +12,7 @@
 import os
 import time
 from logging import getLogger
+
 from prettytable import PrettyTable
 from telegram.ext import Updater
 
@@ -58,8 +59,9 @@ def alerts_handler():
                             disable_notification=True,
                         )
                 except Exception as e:
-                    LOGGER.error(f"Error Occurred While Getting or Posting Alerts : {e}")
-                    pass
+                    LOGGER.error(
+                        f"Error Occurred While Getting or Posting Alerts : {e}"
+                    )
         time.sleep(1)
 
 

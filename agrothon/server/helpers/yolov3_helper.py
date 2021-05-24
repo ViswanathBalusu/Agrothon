@@ -509,6 +509,7 @@ except FileNotFoundError:
 # INCLUDED_CLASSES = ["person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"]
 INC_CLASS_NUMBERS = [0, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
+
 def yolo_detect(
     _image: bytes,
     filter: bool = True,
@@ -573,7 +574,9 @@ def yolo_detect(
                 only_humans = True
             cv2_img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
             cv2_img = draw_outputs(
-                cv2_img, (filtered_boxes, filtered_scores, filtered_classes, new_nums), _class_names
+                cv2_img,
+                (filtered_boxes, filtered_scores, filtered_classes, new_nums),
+                _class_names,
             )
             is_success, cv2_img = cv2.imencode(".jpg", cv2_img)
             LOGGER.debug(f"Finished Detecting, Objects found : {str(detections_list)}")

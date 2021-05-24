@@ -9,11 +9,12 @@
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   API Server request helper
 """
+from logging import getLogger
 from typing import Optional
 
 import aiohttp
 import requests
-from logging import getLogger
+
 from agrothon import API_BASE_URL, API_KEY
 
 LOGGER = getLogger(__name__)
@@ -118,7 +119,6 @@ def get_image_uuids():
     except Exception as e:
         LOGGER.error(e)
         return None
-
 
 
 def get_image_url(uuid: str):
