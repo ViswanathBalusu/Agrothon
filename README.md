@@ -44,6 +44,7 @@
   - There are two commands in Agrothon
     - `agroserver` - Which actually starts the Uvicorn Server on a Unix Domain Socket at `/usr/agrothon.sock`, So you should use a Reverse proxy (Preferably Caddy)
     - `agrothon` - Which starts the telegram bot
+    - `agroserver` - Starts Both `agroserver` and `agrothon` with caddy reverse proxy
 
 - Via **Docker**
    - Download [Docker compose](./docker-compose.yml) and Map the ports according to your use
@@ -75,3 +76,6 @@
 
 ## Note
 - We are using heavy modules like tensorflow and Yolov3, so make sure you have atleast 2.5GB RAM free to get this running
+- Only Works in UNIX environments
+- `caddy`,`xz-utils`, all OpenCV Dependencies must be installed if you are choosing non Docker method.
+- `Python3.8` is compulsory
