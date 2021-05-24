@@ -51,7 +51,7 @@ async def image_instant_detect_post(image: UploadFile = File(...)):
     _db = await MDBClient.get_db()
     _intruder_instant = _db["instant_detect"]
     n_docs = await _intruder_instant.estimated_document_count()
-    status, nos, det_list, _hum, _only_hum, _img = yolo_detect(image_cont)
+    status, nos, det_list, _hum, _only_hum, _img = yolo_detect(image_cont, filter=False)
     if status is not None:
         if status:
             _uuid = str(uuid.uuid4())

@@ -6,7 +6,7 @@
 @Time        :   2021/05/5
 @Author      :   github.com/zzh8829
 @Modifed by  :   Chandra Kiran Viswanath Balusu
-@Version     :   1.0.2
+@Version     :   1.2.6
 @Contact     :   ckvbalusu@gmail.com
 @Desc        :   Yolov3 Python3 Wrapper using tf2
 """
@@ -61,14 +61,6 @@ yolo_anchors = (
 )
 yolo_anchor_masks = np.array([[6, 7, 8], [3, 4, 5], [0, 1, 2]])
 
-yolo_tiny_anchors = (
-    np.array(
-        [(10, 14), (23, 27), (37, 58), (81, 82), (135, 169), (344, 319)], np.float32
-    )
-    / 416
-)
-yolo_tiny_anchor_masks = np.array([[3, 4, 5], [0, 1, 2]])
-
 YOLOV3_LAYER_LIST = [
     "yolo_darknet",
     "yolo_conv_0",
@@ -79,14 +71,6 @@ YOLOV3_LAYER_LIST = [
     "yolo_output_2",
 ]
 
-YOLOV3_TINY_LAYER_LIST = [
-    "yolo_darknet",
-    "yolo_conv_0",
-    "yolo_output_0",
-    "yolo_conv_1",
-    "yolo_output_1",
-]
-
 """ --------------------------------Models------------------------------ """
 
 
@@ -94,7 +78,7 @@ def DarknetConv(x, filters, size, strides=1, batch_norm=True):
     if strides == 1:
         padding = "same"
     else:
-        x = ZeroPadding2D(((1, 0), (1, 0)))(x)  # top left half-padding
+        x = ZeroPadding2D(((1, 0), (1, 0)))(x)
         padding = "valid"
     x = Conv2D(
         filters=filters,
@@ -129,8 +113,8 @@ def Darknet(name=None):
     x = inputs = Input([None, None, 3])
     x = DarknetConv(x, 32, 3)
     x = DarknetBlock(x, 64, 1)
-    x = DarknetBlock(x, 128, 2)  # skip connection
-    x = x_36 = DarknetBlock(x, 256, 8)  # skip connection
+    x = DarknetBlock(x, 128, 2)
+    x = x_36 = DarknetBlock(x, 256, 8)
     x = x_61 = DarknetBlock(x, 512, 8)
     x = DarknetBlock(x, 1024, 4)
     return tf.keras.Model(inputs, (x_36, x_61, x), name=name)
@@ -141,8 +125,6 @@ def YoloConv(filters, name=None):
         if isinstance(x_in, tuple):
             inputs = Input(x_in[0].shape[1:]), Input(x_in[1].shape[1:])
             x, x_skip = inputs
-
-            # concat with skip connection
             x = DarknetConv(x, filters, 1)
             x = UpSampling2D(2)(x)
             x = Concatenate()([x, x_skip])
@@ -174,8 +156,6 @@ def YoloOutput(filters, anchors, classes, name=None):
     return yolo_output
 
 
-# As tensorflow lite doesn't support tf.size used in tf.meshgrid,
-# we reimplemented a simple meshgrid function that use basic tf function.
 def _meshgrid(n_a, n_b):
     return [
         tf.reshape(tf.tile(tf.range(n_a), [n_b]), (n_b, n_a)),
@@ -184,7 +164,6 @@ def _meshgrid(n_a, n_b):
 
 
 def yolo_boxes(pred, anchors, classes):
-    # pred: (batch_size, grid, grid, anchors, (x, y, w, h, obj, ...classes))
     grid_size = tf.shape(pred)[1:3]
     box_xy, box_wh, objectness, class_probs = tf.split(
         pred, (2, 2, 1, classes), axis=-1
@@ -193,11 +172,10 @@ def yolo_boxes(pred, anchors, classes):
     box_xy = tf.sigmoid(box_xy)
     objectness = tf.sigmoid(objectness)
     class_probs = tf.sigmoid(class_probs)
-    pred_box = tf.concat((box_xy, box_wh), axis=-1)  # original xywh for loss
+    pred_box = tf.concat((box_xy, box_wh), axis=-1)
 
-    # !!! grid[x][y] == (y, x)
     grid = _meshgrid(grid_size[1], grid_size[0])
-    grid = tf.expand_dims(tf.stack(grid, axis=-1), axis=2)  # [gx, gy, 1, 2]
+    grid = tf.expand_dims(tf.stack(grid, axis=-1), axis=2)
 
     box_xy = (box_xy + tf.cast(grid, tf.float32)) / tf.cast(grid_size, tf.float32)
     box_wh = tf.exp(box_wh) * anchors
@@ -210,7 +188,6 @@ def yolo_boxes(pred, anchors, classes):
 
 
 def yolo_nms(outputs, anchors, masks, classes):
-    # boxes, conf, type
     b, c, t = [], [], []
 
     for o in outputs:
@@ -326,7 +303,6 @@ def transform_targets_for_output(y_true, grid_size, anchor_idxs):
                 anchor_idx = tf.cast(tf.where(anchor_eq), tf.int32)
                 grid_xy = tf.cast(box_xy // (1 / grid_size), tf.int32)
 
-                # grid[y][x][anchor] = (tx, ty, bw, bh, obj, class)
                 indexes = indexes.write(
                     idx, [i, grid_xy[1], grid_xy[0], anchor_idx[0][0]]
                 )
@@ -405,14 +381,11 @@ def parse_tfrecord(tfrecord, class_table, size):
 """ --------------------------------Utils------------------------------ """
 
 
-def load_darknet_weights(model, weights_file, tiny=False):
+def load_darknet_weights(model, weights_file):
     wf = open(weights_file, "rb")
     major, minor, revision, seen, _ = np.fromfile(wf, dtype=np.int32, count=5)
 
-    if tiny:
-        layers = YOLOV3_TINY_LAYER_LIST
-    else:
-        layers = YOLOV3_LAYER_LIST
+    layers = YOLOV3_LAYER_LIST
 
     for layer_name in layers:
         sub_model = model.get_layer(layer_name)
@@ -460,7 +433,6 @@ def load_darknet_weights(model, weights_file, tiny=False):
 def draw_outputs(img, outputs, class_names):
     colors = (np.array(color_palette("hls", 80)) * 255).astype(np.uint8)
     boxes, objectness, classes, nums = outputs
-    boxes, objectness, classes, nums = boxes[0], objectness[0], classes[0], nums[0]
     wh = np.flip(img.shape[0:2])
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = Image.fromarray(img)
@@ -534,8 +506,12 @@ except FileNotFoundError:
     exit(1)
 
 
+# INCLUDED_CLASSES = ["person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"]
+INC_CLASS_NUMBERS = [0, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+
 def yolo_detect(
     _image: bytes,
+    filter: bool = True,
 ) -> Tuple[
     Optional[bool],
     Optional[int],
@@ -550,26 +526,40 @@ def yolo_detect(
         _img_ = tf.expand_dims(img_raw, 0)
         img__ = transform_images(_img_, 416)
         _boxes, _scores, _classes, _nums = _yolo(img__)
-        if _nums[0] != 0:
+        filtered_boxes, filtered_scores, filtered_classes, new_nums = [], [], [], 0
+        if filter:
+            for i in range(_nums[0]):
+                if int(_classes[0][i]) in INC_CLASS_NUMBERS:
+                    filtered_classes.append(int(_classes[0][i]))
+                    filtered_boxes.append(_boxes[0][i])
+                    filtered_scores.append(_scores[0][i])
+                    new_nums += 1
+        else:
+            filtered_classes = _classes[0]
+            filtered_boxes = _boxes[0]
+            filtered_scores = _scores[0]
+            new_nums = _nums[0]
+
+        if new_nums > 0:
             detections_list = []
             humans = 0
             only_humans = False
             _objects = {}
             _confidences = {}
-            for i in range(_nums[0]):
-                if str(_class_names[int(_classes[0][i])]) in _objects:
+            for i in range(new_nums):
+                if str(_class_names[filtered_classes[i]]) in _objects:
 
-                    _objects[str(_class_names[int(_classes[0][i])])] += 1
-                    _confidences[str(_class_names[int(_classes[0][i])])].append(
-                        round(float(np.array(_scores[0][i])) * 100, 2)
+                    _objects[str(_class_names[filtered_classes[i]])] += 1
+                    _confidences[str(_class_names[filtered_classes[i]])].append(
+                        round(float(np.array(filtered_scores[i])) * 100, 2)
                     )
                 else:
-                    _objects[str(_class_names[int(_classes[0][i])])] = 1
-                    _confidences[str(_class_names[int(_classes[0][i])])] = [
-                        round(float(np.array(_scores[0][i])) * 100, 2)
+                    _objects[str(_class_names[filtered_classes[i]])] = 1
+                    _confidences[str(_class_names[filtered_classes[i]])] = [
+                        round(float(np.array(filtered_scores[i])) * 100, 2)
                     ]
 
-                if (_class_names[int(_classes[0][i])]) == "person":
+                if (_class_names[int(filtered_classes[i])]) == "person":
                     humans += 1
             for i in _objects:
                 detection_dict = {
@@ -583,11 +573,11 @@ def yolo_detect(
                 only_humans = True
             cv2_img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
             cv2_img = draw_outputs(
-                cv2_img, (_boxes, _scores, _classes, _nums), _class_names
+                cv2_img, (filtered_boxes, filtered_scores, filtered_classes, new_nums), _class_names
             )
             is_success, cv2_img = cv2.imencode(".jpg", cv2_img)
             LOGGER.debug(f"Finished Detecting, Objects found : {str(detections_list)}")
-            return True, int(_nums[0]), detections_list, humans, only_humans, cv2_img
+            return True, int(new_nums), detections_list, humans, only_humans, cv2_img
         else:
             LOGGER.debug(f"Finished Detecting, Nothing Found in the image")
             return False, None, None, None, None, None
