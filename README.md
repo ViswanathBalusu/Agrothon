@@ -21,10 +21,9 @@
   
 - API Server handles Everything, All the routes are shown below
 
-  ![API Docs](.github/Apiserver.png?raw=true)
+  ![API Docs](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/Apiserver.png)
 - Telegram bot is just a frontend for the whole Project
 
-  ![Telegram Bot](.github/telegrambot.png)
 - [Agrothon-Client](https://github.com/viswanathbalusu/Agrothon-Client) Sends Sensor data, Intruder images to the API Server which will be analysed there and Stored in the Database
 
 ## Installation
@@ -101,3 +100,86 @@
 - Only Works in UNIX environments
 - `caddy`,`xz-utils`, all OpenCV Dependencies must be installed if you are choosing non Docker method.
 - `Python3.8` is compulsory
+
+<div align="center">
+<h1>Agrothon Telegram bot</h1>
+<h1>Screenshots</h1>
+</div>
+
+- Telegram Bot Start
+  
+  ![Start](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/telegrambot.png)
+
+- Bot Commands
+  
+  ```
+    start - start command
+    field - get field status
+    weather - get weather status
+    rainfall - get predictions of rainfall for your region
+    settings - change settings of the bot
+    restart - restart the bot
+    log - get the log files
+    stats - get the server stats
+    ping - check ping of server
+    help - to get help message
+  ```
+
+  ![Commands](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/botcommands.png)
+
+- Object Detection
+  
+  ![Bear](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/beardetect.jpg)
+
+  ![Cow](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/cowdetect.jpg)
+
+  ![Elephant](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/elephantdetect.jpg)
+
+  ![Farm](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/farmdetect.jpg)
+
+  ![Sheep](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/sheepdetect.jpg)
+
+  ![Peacock](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/pcdetect.jpg)
+
+- Bot Commands Usage
+  
+  - Pump Prediction
+  
+    ![Pump Prediction](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/botpredhindi.png)
+  - Language Change
+  
+    ![Language Change](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/changelanguagetelugu.png)
+  - Complete info
+  
+    ![Complete info](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/completeinfotamil.png)
+  - Field Command
+  
+    ![Field Command](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/fieldtamil.png)
+  - Help Command
+  
+    ![Help Command](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/helptamil.png)
+  - Object Detection by sending an Image to Bot
+  
+    ![Object Detection Bot](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/intrudertel.png)
+  - Language Menu
+  
+    ![Language Menu](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/langtelugu.png)
+  - Pump Keyboard
+    
+    ![PumpKeyboard](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/langtelugu.png)
+
+  - Pump on/off
+  
+    ![pump on/off](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/pumponoffhindi.png)
+  - Rainfall Prediction
+
+    ![Rainfall](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/rainfall.png)
+  - Settings Keyboard
+
+    ![Settings](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/settings.png)
+  - Server Stats
+
+    ![Stats](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/statstelugu.png)
+  - Weather Data
+
+    ![Weather](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/weathertelugu.png)
