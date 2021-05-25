@@ -148,7 +148,7 @@
     ![Pump Prediction](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/botpredhindi.png)
   - Language Change
   
-    ![Language Change](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/changelanguagetelugu.png)
+    ![Language Change](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/changelangtelugu.png)
   - Complete info
   
     ![Complete info](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/completeinfotamil.png)
