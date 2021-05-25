@@ -28,7 +28,7 @@ async def callback_sensors(client, message):
         if message.data == "moisture":
             msg = """"""
             for i in range(response["no_of_sensors"]):
-                msg += LANG.MOISTURE_SENSOR.format(str(i+1), response["moisture"][i])
+                msg += LANG.MOISTURE_SENSOR.format(str(i + 1), response["moisture"][i])
             msg += LANG.MOISTURE_RESP.format(up_at, last_read)
             await message.message.edit_text(
                 text=msg,
