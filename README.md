@@ -166,7 +166,7 @@
     ![Language Menu](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/langtelugu.png)
   - Pump Keyboard
     
-    ![PumpKeyboard](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/langtelugu.png)
+    ![PumpKeyboard](https://raw.githubusercontent.com/viswanathbalusu/Agrothon/main/images/pumphindi.png)
 
   - Pump on/off
   
