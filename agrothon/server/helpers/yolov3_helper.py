@@ -3,10 +3,10 @@
 """
 @File        :   yolov3_helper.py
 @Path        :   agrothon/server/helpers/
-@Time        :   2021/05/5
+@Time        :   2021/05/28
 @Author      :   github.com/zzh8829
 @Modifed by  :   Chandra Kiran Viswanath Balusu
-@Version     :   1.2.6
+@Version     :   1.3.1
 @Contact     :   ckvbalusu@gmail.com
 @Desc        :   Yolov3 Python3 Wrapper using tf2
 """
@@ -242,7 +242,6 @@ def YoloV3(
     anchors=yolo_anchors,
     masks=yolo_anchor_masks,
     classes=80,
-    training=False,
 ):
     x = inputs = Input([size, size, channels], name="input")
 
@@ -256,9 +255,6 @@ def YoloV3(
 
     x = YoloConv(128, name="yolo_conv_2")((x, x_36))
     output_2 = YoloOutput(128, len(masks[2]), classes, name="yolo_output_2")(x)
-
-    if training:
-        return Model(inputs, (output_0, output_1, output_2), name="yolov3")
 
     boxes_0 = Lambda(
         lambda x: yolo_boxes(x, anchors[masks[0]], classes), name="yolo_boxes_0"

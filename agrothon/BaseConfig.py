@@ -3,9 +3,9 @@
 """
 @File    :   BaseConfig.py
 @Path    :   agrothon/
-@Time    :   2021/05/24
+@Time    :   2021/05/28
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.2.7
+@Version :   1.3.1
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Base Configuration for Agrothon
 """
@@ -49,3 +49,7 @@ class Config(object):
         SENSOR_PRIORITY_INDEX = int(os.environ.get("SENSOR_PRIORITY_INDEX", 1))
     except BaseException:
         SENSOR_PRIORITY_INDEX = 1
+    try:
+        AUTH_ID = int(os.environ.get("AUTH_ID", None))
+    except BaseException:
+        AUTH_ID = None

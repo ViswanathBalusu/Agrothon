@@ -3,9 +3,9 @@
 """
 @File    :   __main__.py
 @Path    :   agrothon/
-@Time    :   2021/05/8
+@Time    :   2021/05/28
 @Author  :   Chandra Kiran Viswanath Balusu
-@Version :   1.1.4
+@Version :   1.3.1
 @Contact :   ckvbalusu@gmail.com
 @Desc    :   Main Module for Agrothon
 """
@@ -29,6 +29,7 @@ from agrothon import (
     TELEGRAM_API_HASH,
     TELEGRAM_APP_ID,
     WEATHER_COMMAND,
+    AUTH_ID
 )
 
 from .AlertBot import alerts_handler, language_change_check, restart_check
@@ -60,10 +61,19 @@ AgroBot = Client(
     device_model="Agrothon",
 )
 
+
+AUTH_FILTER = None
+
+if AUTH_ID is not None:
+    AUTH_FILTER = filters.user(users=AUTH_ID)
+else:
+    AUTH_FILTER = filters.all
+
+
 # Callback Query handlers
 cb_sensors = CallbackQueryHandler(
     callback_sensors,
-    filters=filters.regex(pattern="^moisture|humidity|temperature|complete$"),
+    filters=filters.regex(pattern="^moisture|humidity|temperature|complete$")
 )
 AgroBot.add_handler(cb_sensors)
 
@@ -88,39 +98,38 @@ rsrt_hand = CallbackQueryHandler(
 )
 AgroBot.add_handler(rsrt_hand)
 
-# Command Handlers
-
-field_hand = MessageHandler(field, filters=filters.command([FIELD_COMMAND]))
+# Command handlers
+field_hand = MessageHandler(field, filters=filters.command([FIELD_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(field_hand)
 
-phot_detect = MessageHandler(photo_detect, filters=filters.photo & filters.private)
+phot_detect = MessageHandler(photo_detect, filters=filters.photo & filters.private & AUTH_FILTER)
 AgroBot.add_handler(phot_detect)
 
-rain_hand = MessageHandler(rainfall_predict, filters=filters.command([RAIN_COMMAND]))
+rain_hand = MessageHandler(rainfall_predict, filters=filters.command([RAIN_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(rain_hand)
 
-set_hand = MessageHandler(settings, filters=filters.command([SETTINGS_COMMAND]))
+set_hand = MessageHandler(settings, filters=filters.command([SETTINGS_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(set_hand)
 
-rest_hand = MessageHandler(restart, filters=filters.command([RESTART_COMMAND]))
+rest_hand = MessageHandler(restart, filters=filters.command([RESTART_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(rest_hand)
 
-start_hand = MessageHandler(start, filters=filters.command(["start"]))
+start_hand = MessageHandler(start, filters=filters.command(["start"]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(start_hand)
 
-help_hand = MessageHandler(help_command, filters=filters.command([HELP_COMMAND]))
+help_hand = MessageHandler(help_command, filters=filters.command([HELP_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(help_hand)
 
-ping_hand = MessageHandler(ping_command, filters=filters.command([PING_COMMAND]))
+ping_hand = MessageHandler(ping_command, filters=filters.command([PING_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(ping_hand)
 
-stats_hand = MessageHandler(stats, filters=filters.command([STATS_COMMAND]))
+stats_hand = MessageHandler(stats, filters=filters.command([STATS_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(stats_hand)
 
-log_hand = MessageHandler(send_log, filters=filters.command([LOG_COMMAND]))
+log_hand = MessageHandler(send_log, filters=filters.command([LOG_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(log_hand)
 
-weather_hand = MessageHandler(weather, filters=filters.command([WEATHER_COMMAND]))
+weather_hand = MessageHandler(weather, filters=filters.command([WEATHER_COMMAND]) & filters.private & AUTH_FILTER)
 AgroBot.add_handler(weather_hand)
 
 
