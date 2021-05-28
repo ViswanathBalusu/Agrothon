@@ -92,6 +92,7 @@
 | API_KEY | An API Key for your Server | Agrothon | True | This is like a Password for your API Server, So choose Wisely (Alphanumeric only) |
 | DB_URL | MongoDB URL | mongodb+srv://xxx:xxx@hmmm.mongodb.net | True | Database to Store All the data, get this from [MongoDB](https://mongodb.com) |
 | SENSOR_PRIORITY_INDEX | Moisture sensor priority | 2 | True | Which moisture sensor to use for predicting on/off the pump |
+| AUTH_ID | Telegram user ID | 12345678 | False | If this is not provided, bot access who can find it can use it |
   
  `* if there are Other ports too the Bot will Work but it may not be able to post images`
 
